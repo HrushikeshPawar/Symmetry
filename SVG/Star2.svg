@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" version="1.1" width="720" height="720" id="svg2">
+  <defs id="defs4">
+    <linearGradient x1="382.3376770019531" y1="489.1396484375" x2="490.5304870605469" y2="333.8942260742188" id="linearGradient3019" xlink:href="#linearGradient3013" gradientUnits="userSpaceOnUse" gradientTransform="matrix(2.0778635,0,0,2.0778635,-1086.923309005525,-459.4802680110498)"/>
+    <linearGradient id="linearGradient3013">
+      <stop id="stop3015" style="stop-color:#000000;stop-opacity:0.8263888955" offset="0"/>
+      <stop id="stop3017" style="stop-color:#000000;stop-opacity:1" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3013-7">
+      <stop id="stop3015-9" style="stop-color:#000000;stop-opacity:0.8263888955" offset="0"/>
+      <stop id="stop3017-0" style="stop-color:#000000;stop-opacity:1" offset="1"/>
+    </linearGradient>
+    <linearGradient x1="598.608642578125" y1="490.8250427246094" x2="881.5010986328125" y2="490.8250427246094" id="linearGradient3776" xlink:href="#linearGradient3013-7" gradientUnits="userSpaceOnUse"/>
+    <linearGradient x1="-543.2540283203125" y1="770.9373168945312" x2="-190.8759613037109" y2="231.0882263183594" id="linearGradient3770" xlink:href="#linearGradient3013-7-3" gradientUnits="userSpaceOnUse" gradientTransform="matrix(2.039230408653212,0,0,2.039230408653212,791.7287816939475,-586.3220678901052)"/>
+    <linearGradient x1="598.608642578125" y1="490.8250427246094" x2="881.5010986328125" y2="490.8250427246094" id="linearGradient3793-8" xlink:href="#linearGradient3013-7-3" gradientUnits="userSpaceOnUse" gradientTransform="translate(-368.00764,35.356037)"/>
+    <linearGradient id="linearGradient3013-7-3">
+      <stop id="stop3015-9-8" style="stop-color:#000000;stop-opacity:0.8263888955" offset="0"/>
+      <stop id="stop3017-0-8" style="stop-color:#000000;stop-opacity:1" offset="1"/>
+    </linearGradient>
+    <linearGradient x1="598.608642578125" y1="490.8250427246094" x2="881.5010986328125" y2="490.8250427246094" id="linearGradient3776-3" xlink:href="#linearGradient3013-7-3" gradientUnits="userSpaceOnUse"/>
+    <linearGradient x1="-543.2540283203125" y1="770.9373168945312" x2="-190.8759613037109" y2="231.0882263183594" id="linearGradient3523" xlink:href="#linearGradient3013-7-3" gradientUnits="userSpaceOnUse" gradientTransform="translate(717.6270899999982,144.1597496317726)"/>
+  </defs>
+  <g transform="translate(0,-332.36218)" id="layer1">
+    <path d="m 352.9034596272676,377.8621800000001 -90.8011532090893,157.266106729489 -181.60230641817827,0 90.80115320908919,157.201679811533 L 80.5,849.596073270511 l 181.60230641817838,0 L 352.9034596272678,1006.86218 443.7690565220981,849.596073270511 l 181.6023064181779,0 -90.8011532090893,-157.2661067294889 90.8011532090893,-157.2016798115334 -181.6023064181782,0 L 352.9034596272678,377.86218 z" id="path2834" style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1"/>
+    <path d="m 352.9055211396714,377.9649937214371 0.03222184287,314.4999999999998 90.8333750519597,-157.2338932705111 -90.8655968948301,-157.2661067294886 z" id="path2839" style="fill:#ffffff;stroke:none"/>
+    <path d="m 625.3713629402757,535.1282867294892 -272.4197644322828,157.2778976738188 181.6206727355975,0.026595859151 90.7990916966854,-157.3044935329697 z" id="path2841" style="fill:#ffffff;stroke:none"/>
+    <path d="m 625.4358066260168,849.6605001884654 -272.451986275153,-157.2221023261805 90.7872976836376,157.2604891296631 181.6646885915153,-0.038386803481 z" id="path2843" style="fill:#ffffff;stroke:none"/>
+    <path d="m 352.9055211396714,1006.964993721437 -0.03222184287,-314.5 -90.8333750519604,157.233893270512 90.8655968948307,157.266106729488 z" id="path2845" style="fill:#ffffff;stroke:none"/>
+    <path d="M 80.45353486451793,849.7428913952553 352.873299296801,692.4649937214367 171.2526265612021,692.4383978622854 80.45353486451702,849.742891395255 z" id="path2847" style="fill:#ffffff;stroke:none"/>
+    <path d="M 80.42131302164753,535.2428913952552 352.8732992968011,692.4649937214375 262.0860016131633,535.2045045917741 80.42131302164776,535.2428913952551 z" id="path2849" style="fill:#ffffff;stroke:none"/>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Open Clip Art Library</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>outrayj hexagram 12 stripe</dc:title>
+        <dc:date>2011-05-31T23:39:21</dc:date>
+        <dc:description>outrayj hexagram 12 stripe</dc:description>
+        <dc:source>http://openclipart.org/detail/141721/outrayj-hexagram-12-stripe-by-10binary</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>10binary</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>12</rdf:li>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>hexagram</rdf:li>
+            <rdf:li>outrayj</rdf:li>
+            <rdf:li>polygon</rdf:li>
+            <rdf:li>star</rdf:li>
+            <rdf:li>stripe</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
