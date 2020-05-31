@@ -498,3 +498,57 @@ class Summary_What(Scene):
         op2.move_to, op2.get_center()*0+RIGHT*4+DOWN*1.4,
         inv.move_to, inv.get_center()*0+RIGHT*4+DOWN*2.1, scene.set_opacity, 1)
         self.wait(3)
+
+class First_Scene_How(Scene):
+    def construct(self):
+
+        how = TextMobject("HOW", " ?").scale(1.3).move_to(UP*3.5)
+        how[0].set_color(RED)
+        self.wait()
+        self.play(Write(how), run_time=3)
+        self.wait()
+
+        line = Line(RIGHT*0.7+UP*3, RIGHT*0.7+DOWN*3)
+        #self.play(ShowCreation(line))
+        #self.wait()
+
+        vis = TexMobject("Visual \, Representation", color=BLUE_D).scale(0.7)
+        mat = TexMobject("Mathematical \, Representation", color=BLUE_D).scale(0.7)
+        que = TexMobject(r"?", color = RED).scale(8).move_to(RIGHT*4)
+        arrow = CurvedArrow(LEFT*4+DOWN*2.5, RIGHT*4+DOWN*2.5, angle=PI/4)
+        mat.move_to(UP*2.5+RIGHT*4)
+        vis.move_to(UP*2.5+LEFT*3)
+        self.play(Write(vis))
+        self.wait()
+
+        ##Visiual Represntation of Symmetry
+        inv = TextMobject("Invariance")
+        op1 = TextMobject("Operations")
+        self.wait()
+
+        square = Square(color=BLUE_D).move_to(LEFT*5).scale(0.5)
+        arrow1 = Arrow(DOWN*1.5+LEFT*5,LEFT*5+DOWN*0.5)
+        text1 = TextMobject("Mathematical\\ Object").next_to(arrow1, DOWN*0.5).scale(0.5)
+        self.play(ShowCreation(square))
+        self.play(FadeInFromDown(arrow1), FadeInFromDown(text1))
+
+        arrow2 = Arrow(LEFT*4, LEFT*3)
+        text2 = TextMobject("Rotate").move_to(LEFT*3.5 + UP*0.5).scale(0.5)
+        text3 = TexMobject(r"90^{\circ}").move_to(LEFT*3.5+DOWN*0.5).scale(0.5)
+        arrow3 = Arrow(LEFT*3.5 + UP*1.5, LEFT*3.5+UP*0.5)
+        self.play(FadeIn(arrow2), FadeIn(text2),FadeIn(text3), ShowCreation(line))
+        op1.next_to(arrow3, UP).scale(0.5)
+        self.play(ShowCreation(arrow3),FadeIn(op1), Write(mat))
+
+        square2 = square.copy().set_color(RED)
+        self.play(square2.shift, RIGHT*3)
+        arrow4 = Arrow(DOWN*1.5+LEFT*2,DOWN*0.5+LEFT*2)
+        op2 = TextMobject("Transformation").scale(0.5).next_to(arrow4, DOWN*0.5)
+        self.play(FadeInFromDown(arrow4), FadeInFromDown(op2), ShowCreation(arrow))
+        self.play(Rotate(square2, PI/2), Write(que))
+
+        arrow5 = Arrow(LEFT*0.5, LEFT*1.5)
+        square3 = square.copy()
+        inv.move_to(LEFT*0.1).scale(0.5)
+        self.play(FadeIn(arrow5), FadeInFromDown(inv), square3.shift, RIGHT*3)
+        self.wait(3)

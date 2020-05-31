@@ -4,7 +4,6 @@ class Test(Scene):
     def construct(self):
         inv = TextMobject("Inversion").scale(0.5).move_to(UP*3+RIGHT*5)
         op1 = TextMobject("Operations").scale(0.5).move_to(UP*3+ LEFT*5)
-        op2 = TextMobject("Transformation").scale(0.5).move_to(UP*3 + LEFT)
         self.add(op1)
         self.add(op2)
         self.add(inv)
@@ -25,11 +24,9 @@ class Test(Scene):
 
         square2 = square.copy().set_color(RED)
         self.play(square2.shift, RIGHT*6)
-        self.play(op2.shift, UP*3)
         op2 = TextMobject("Transformation").scale(0.7).move_to(RIGHT*2+DOWN*3)
         arrow4 = Arrow(DOWN*2.5+RIGHT*2,DOWN*1.5+RIGHT*2)
-        self.play(FadeInFromDown(arrow4), FadeInFromDown(op2))
-        self.play(Rotate(square2, PI/2))
+        self.add(arrow4, op2)
 
         arrow5 = Arrow(RIGHT*4, RIGHT*3)
         square3 = square.copy()
