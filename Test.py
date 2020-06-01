@@ -511,3 +511,212 @@ class How(Scene):
         inv.move_to(LEFT*0.1).scale(0.5)
         self.play(FadeIn(arrow5), FadeInFromDown(inv), square3.shift, RIGHT*3)
         self.wait(3)
+
+class How2(Scene):
+    def construct(self):
+
+        def update_one(obj):
+            obj.move_to(line1.get_start())
+        def update_two(obj):
+            obj.move_to(line2.get_start())
+        def update_three(obj):
+            obj.move_to(line1.get_end())
+        def update_four(obj):
+            obj.move_to(line2.get_end())
+
+        ##Creating and playing Text (Mathematical Representation)
+        mat = TextMobject("Mathematical Representation", color=BLUE_D)
+        mat.move_to(UP*3.5+LEFT*3)
+        self.wait()
+        self.play(FadeIn(mat, UP*3.5+LEFT*3))
+        self.wait()
+
+        #Creating and placing Square
+        square = Square().move_to(UP*1.5+LEFT*5).scale(0.5)
+        self.play(ShowCreation(square))
+        shape_fade=VGroup(square)
+
+        #Creating Numbers
+        one = TexMobject("1", color=GREEN).scale(0.5)
+        one1 = one.copy().set_color(RED)
+        two = TexMobject("2", color=GREEN).scale(0.5)
+        two2 = two.copy().set_color(RED)
+        three = TexMobject("3", color=GREEN).scale(0.5)
+        three3 = three.copy().set_color(RED)
+        four = TexMobject("4", color=GREEN).scale(0.5)
+        four4 = four.copy().set_color(RED)
+        text_fade=VGroup(one, one1, two, two2, three, three3, four, four4)
+
+        #Creating lines and arrange numbers
+        line1 = Line(square.get_corner(UL)+LEFT*0.15+UP*0.15,
+                    square.get_corner(DR)+RIGHT*0.15+DOWN*0.15)
+        line2 = Line(square.get_corner(DL)+LEFT*0.15+DOWN*0.15,
+                    square.get_corner(UR)+RIGHT*0.15+UP*0.15)
+        one.move_to(line1.get_start())
+        two.move_to(line2.get_start())
+        three.move_to(line1.get_end())
+        four.move_to(line2.get_end())
+        for i in [one, two, three, four]:
+            self.play(Write(i))
+        self.wait(2)
+
+
+        square2 = square.copy()
+        square2 = VGroup(square2, line1.set_opacity(0), line2.set_opacity(0))
+        arrow = Arrow(UP*1.5+LEFT*4.3,UP*1.5+LEFT*2.7)
+        rot = TextMobject("Rotate", color=YELLOW).scale(0.5).move_to(LEFT*3.5+UP*2)
+        ang = TexMobject(r"180^\circ", color=YELLOW).scale(0.5).move_to(LEFT*3.5+UP)
+        self.play(ShowCreation(arrow), Write(rot), Write(ang))
+        one1.add_updater(update_one)
+        two2.add_updater(update_two)
+        three3.add_updater(update_three)
+        four4.add_updater(update_four)
+        self.add(one1, two2, three3, four4)
+        self.play(square2.shift, RIGHT*3)
+        self.wait()
+        shape_fade.add(square2, arrow)
+        text_fade.add(rot, ang)
+
+        self.play(Rotate(square2, PI))
+        self.wait(2)
+
+        one_1 = one.copy().move_to(RIGHT*3+UP*2.5)
+        two_1 = two.copy().move_to(RIGHT*3+UP*2)
+        three_1 = three.copy().move_to(RIGHT*3+UP*1.5)
+        four_1 = four.copy().move_to(RIGHT*3+UP)
+
+        self.play(ShowCreation(one_1), ShowCreation(two_1), ShowCreation(three_1),
+        ShowCreation(four_1))
+
+        carrow1 = CurvedArrow(one.get_center(), square2.get_corner(UL),
+        angle=-PI/4, buff=10).scale(0.9)
+        carrow2 = CurvedArrow(two.get_center(), square2.get_corner(DL),
+        angle=PI/4, buff=10).scale(0.9)
+        carrow3 = CurvedArrow(three.get_center(), square2.get_corner(DR),
+        angle=PI/4, buff=10).scale(0.9)
+        carrow4 = CurvedArrow(four.get_center(), square2.get_corner(UR),
+        angle=-PI/4, buff=10).scale(0.9)
+
+        arrow1 = Arrow(RIGHT*3+UP*2.5, RIGHT*4+UP*2.5)
+        arrow2 = Arrow(RIGHT*3+UP*2, RIGHT*4+UP*2)
+        arrow3 = Arrow(RIGHT*3+UP*1.5, RIGHT*4+UP*1.5)
+        arrow4 = Arrow(RIGHT*3+UP, RIGHT*4+UP)
+
+        one_2 = one.copy().set_color(RED).move_to(one.get_center()*0+RIGHT*4+UP*1.5)
+        two_2 = two.copy().set_color(RED).move_to(two.get_center()*0+RIGHT*4+UP)
+        three_2 = three.copy().set_color(RED).move_to(three.get_center()*0+RIGHT*4+UP*2.5)
+        four_2 = four.copy().set_color(RED).move_to(four.get_center()*0+RIGHT*4+UP*2)
+
+        self.play(ShowCreation(carrow1))
+        self.play(ShowCreation(arrow1), FadeInFromDown(three_2))
+        self.wait()
+        self.play(FadeOut(carrow1), ShowCreation(carrow2))
+        self.play(ShowCreation(arrow2), FadeInFromDown(four_2))
+        self.wait()
+        self.play(FadeOut(carrow2), ShowCreation(carrow3))
+        self.play(ShowCreation(arrow3), FadeInFromDown(one_2))
+        self.wait()
+        self.play(FadeOut(carrow3), ShowCreation(carrow4))
+        self.play(ShowCreation(arrow4), FadeInFromDown(two_2))
+        self.play(FadeOut(carrow4))
+        self.wait()
+
+        #2nd Example, Flip / Reflection
+
+        square3 = VGroup(square.copy(), one.copy(), two.copy(), three.copy(), four.copy())
+        arrow5 = Arrow(LEFT*4.3+DOWN*2, LEFT*2.7+DOWN*2)
+        ref = TextMobject("Refl / Flip", color=YELLOW).scale(0.5).move_to(LEFT*3.5 + DOWN*1.5)
+        ax = TextMobject("Y - axis", color=YELLOW).scale(0.5).move_to(LEFT*3.5 + DOWN*2.5)
+        shape_fade.add(square3, arrow5)
+        text_fade.add(ref, ax)
+
+
+        self.play(square3.shift, DOWN*3.5)#, one.copy().shift, DOWN*3.5,
+        #two.copy().shift, DOWN*3.5, three.copy().shift, DOWN*3.5,
+        #four.copy().shift, DOWN*3.5)
+        self.wait()
+        self.play(ShowCreation(arrow5), Write(ref), Write(ax))
+        self.wait()
+
+        square4 = Square().scale(0.5).move_to(LEFT*5+DOWN*2)
+        line3 = Line(square4.get_corner(UL)+LEFT*0.15+UP*0.15,
+                    square4.get_corner(DR)+RIGHT*0.15+DOWN*0.15).set_opacity(0)
+        line4 = Line(square4.get_corner(DL)+LEFT*0.15+DOWN*0.15,
+                    square4.get_corner(UR)+RIGHT*0.15+UP*0.15).set_opacity(0)
+        square4 = VGroup(square4, line3.set_opacity(0), line4.set_opacity(0))
+        one3 = TexMobject(r"1", color=RED, opacity=0).scale(0.5).move_to(
+                        line3.get_start())
+        two3 = TexMobject(r"2", color=RED, opacity=0).scale(0.5).move_to(
+                        line4.get_start())
+        three3 = TexMobject(r"3", color=RED, opacity=0).scale(0.5).move_to(
+                        line3.get_end())
+        four3 = TexMobject(r"4", color=RED, opacity=0).scale(0.5).move_to(
+                        line4.get_end())
+        shape_fade.add(square4)
+        text_fade.add(one3, two3, three3, four3)
+
+        def update_one3(obj):
+            obj.move_to(line3.get_start())
+            obj.set_opacity(1)
+        def update_two3(obj):
+            obj.move_to(line4.get_start())
+            obj.set_opacity(1)
+        def update_three3(obj):
+            obj.move_to(line3.get_end())
+            obj.set_opacity(1)
+        def update_four3(obj):
+            obj.move_to(line4.get_end())
+            obj.set_opacity(1)
+
+        one3.add_updater(update_one3)
+        two3.add_updater(update_two3)
+        three3.add_updater(update_three3)
+        four3.add_updater(update_four3)
+
+        self.add(one3, two3, three3, four3)
+
+        self.play(square4.shift, RIGHT*3)
+        line = Line(LEFT*2+DOWN, LEFT*2+DOWN*3)
+        dline = DashedVMobject(line)
+        self.play(ShowCreation(dline))
+        self.wait()
+        self.play(square4.flip,np.array([0,-3,0]))
+        self.wait(3)
+        shape_fade.add(dline)
+
+        one4 = one.copy().move_to(RIGHT*3+DOWN*1.5)
+        two4 = two.copy().move_to(RIGHT*3+DOWN*2)
+        three4 = three.copy().move_to(RIGHT*3+DOWN*2.5)
+        four4 = four.copy().move_to(RIGHT*3+DOWN*3)
+        arrow_1 = arrow1.copy().move_to(RIGHT*3.5+DOWN*1.5)
+        arrow_2 = arrow2.copy().move_to(RIGHT*3.5+DOWN*2)
+        arrow_3 = arrow3.copy().move_to(RIGHT*3.5+DOWN*2.5)
+        arrow_4 = arrow4.copy().move_to(RIGHT*3.5+DOWN*3)
+
+        self.play(ShowCreation(one4), ShowCreation(two4), ShowCreation(three4),
+        ShowCreation(four4), ShowCreation(arrow_1), ShowCreation(arrow_2),
+        ShowCreation(arrow_3), ShowCreation(arrow_4))
+        self.wait()
+
+        carrow_1 = CurvedArrow(square3.get_corner(UL), square4.get_corner(UL),
+        angle=-PI/4, buff=10).scale(0.9)
+        carrow_2 = CurvedArrow(square3.get_corner(DL), square4.get_corner(DL),
+        angle=PI/4, buff=10).scale(0.9)
+        carrow_3 = CurvedArrow(square3.get_corner(DR), square4.get_corner(DR),
+        angle=PI/4, buff=10).scale(0.9)
+        carrow_4 = CurvedArrow(square3.get_corner(UR), square4.get_corner(UR),
+        angle=-PI/4, buff=10).scale(0.9)
+
+        one5 = one.copy().set_color(RED).move_to(one.get_center()*0+RIGHT*4+DOWN*3)
+        two5 = two.copy().set_color(RED).move_to(two.get_center()*0+RIGHT*4+DOWN*2.5)
+        three5 = three.copy().set_color(RED).move_to(three.get_center()*0+RIGHT*4+DOWN*2)
+        four5 = four.copy().set_color(RED).move_to(four.get_center()*0+RIGHT*4+DOWN*1.5)
+
+        self.play(ShowCreation(carrow_1), ShowCreation(four5))
+        self.play(FadeOut(carrow_1), ShowCreation(carrow_2), ShowCreation(three5))
+        self.play(FadeOut(carrow_2), ShowCreation(carrow_3), ShowCreation(two5))
+        self.play(FadeOut(carrow_3), ShowCreation(carrow_4), ShowCreation(one5))
+        self.play(FadeOut(carrow_4))
+        self.wait(3)
+        self.play(FadeOut(shape_fade), FadeOut(text_fade))
+        self.wait(3)
