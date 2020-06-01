@@ -761,3 +761,382 @@ class Second_Scene_How(Scene):
         self.wait(3)
         self.play(FadeOut(shape_fade), FadeOut(text_fade))
         self.wait(3)
+
+class Third_Scene_How(Scene):
+    def construct(self):
+
+        ##Construct Last Scene##
+        mat = TextMobject("Mathematical Representation", color=BLUE_D)
+        mat.move_to(UP*3.5+LEFT*3)
+
+        one_g = TexMobject(r"1", color=GREEN_D).scale(0.5).move_to(RIGHT*3+UP*2.5)
+        two_g = TexMobject(r"2", color=GREEN_D).scale(0.5).move_to(RIGHT*3+UP*2)
+        three_g = TexMobject(r"3", color=GREEN_D).scale(0.5).move_to(RIGHT*3+UP*1.5)
+        four_g = TexMobject(r"4", color=GREEN_D).scale(0.5).move_to(RIGHT*3+UP)
+
+        arrow1 = Arrow(RIGHT*3+UP*2.5, RIGHT*4+UP*2.5)
+        arrow2 = Arrow(RIGHT*3+UP*2, RIGHT*4+UP*2)
+        arrow3 = Arrow(RIGHT*3+UP*1.5, RIGHT*4+UP*1.5)
+        arrow4 = Arrow(RIGHT*3+UP, RIGHT*4+UP)
+
+        one_r = TexMobject(r"1", color=RED).scale(0.5).move_to(RIGHT*4+UP*1.5)
+        two_r = TexMobject(r"2", color=RED).scale(0.5).move_to(RIGHT*4+UP)
+        three_r = TexMobject(r"3", color=RED).scale(0.5).move_to(RIGHT*4+UP*2.5)
+        four_r = TexMobject(r"4", color=RED).scale(0.5).move_to(RIGHT*4+UP*2)
+
+        num1 = VGroup(one_g, two_g, three_g, four_g, arrow1, arrow2, arrow3,
+        arrow4, one_r, two_r, three_r, four_r)
+
+        one_g1 = TexMobject(r"1", color=GREEN_D).scale(0.5).move_to(RIGHT*3+DOWN*1.5)
+        two_g1 = TexMobject(r"2", color=GREEN_D).scale(0.5).move_to(RIGHT*3+DOWN*2)
+        three_g1 = TexMobject(r"3", color=GREEN_D).scale(0.5).move_to(RIGHT*3+DOWN*2.5)
+        four_g1 = TexMobject(r"4", color=GREEN_D).scale(0.5).move_to(RIGHT*3+DOWN*3)
+
+        arrow_1 = Arrow(RIGHT*3+DOWN*1.5, RIGHT*4+DOWN*1.5)
+        arrow_2 = Arrow(RIGHT*3+DOWN*2, RIGHT*4+DOWN*2)
+        arrow_3 = Arrow(RIGHT*3+DOWN*2.5, RIGHT*4+DOWN*2.5)
+        arrow_4 = Arrow(RIGHT*3+DOWN*3, RIGHT*4+DOWN*3)
+
+        one_r1 = TexMobject(r"1", color=RED).scale(0.5).move_to(RIGHT*4+DOWN*3)
+        two_r1 = TexMobject(r"2", color=RED).scale(0.5).move_to(RIGHT*4+DOWN*2.5)
+        three_r1 = TexMobject(r"3", color=RED).scale(0.5).move_to(RIGHT*4+DOWN*2)
+        four_r1 = TexMobject(r"4", color=RED).scale(0.5).move_to(RIGHT*4+DOWN*1.5)
+
+        num2 = VGroup(one_g1, two_g1, three_g1, four_g1, arrow_1, arrow_2, arrow_3,
+        arrow_4, one_r1, two_r1, three_r1, four_r1)
+
+        self.add(mat, num1,  num2)
+        self.wait()
+        ## DONE CREATING LAST SCENE##
+
+        ##NEW SCENE Starts##
+        self.play(num1.scale, 1.4, num1.shift, LEFT*8, num2.scale, 1.4,
+        num2.shift, LEFT*8, run_time=2)
+        self.wait()
+
+        ##Arrow pointing towards compact form##
+        arrow11 = Arrow(LEFT*2+UP*1.75, UP*1.75, color=BLUE)
+        self.play(ShowCreation(arrow11))
+        self.wait()
+
+        ##Matrix Representation##
+        matrix1 = TexMobject(r"\begin{pmatrix} 1 & 2 & 3 & 4 \\ 3 & 4 & 1 & 2 \end{pmatrix}")
+        for i in range(1,5):
+            matrix1[0][i].set_color(GREEN_D).scale(0.75)
+        for i in range(5,9):
+            matrix1[0][i].set_color(RED).scale(0.75)
+
+        matrix1.move_to(UP*1.75+RIGHT*2)
+        self.play(Write(matrix1[0][0]), Write(matrix1[0][9]))
+        self.wait()
+        rnum1 = [three_r, four_r, one_r, two_r]
+        gmatnum = [matrix1[0][1], matrix1[0][2], matrix1[0][3], matrix1[0][4]]
+        self.play(*[FadeIn(mob) for mob in gmatnum])
+        for i in range(5,9):
+            self.play(Indicate(rnum1[i-5], scale_factor=2), Write(matrix1[0][i]))
+        self.wait(2)
+        ##1st Matrix done##
+
+        ##2nd Matrix Represntation##
+        ##2nd Arrow ##
+        arrow12 = arrow11.copy().move_to(arrow11.get_center()*0 + LEFT+DOWN*2.25)
+        self.play(ShowCreation(arrow12))
+        self.wait()
+
+        ##2nd Matrix##
+        matrix2 = TexMobject(r"\begin{pmatrix} 1 & 2 & 3 & 4 \\ 4 & 3 & 2 & 1 \end{pmatrix}")
+        for i in range(1,5):
+            matrix2[0][i].set_color(GREEN_D).scale(0.75)
+        for i in range(5,9):
+            matrix2[0][i].set_color(RED).scale(0.75)
+
+        matrix2.move_to(DOWN*2.25+RIGHT*2)
+        self.play(Write(matrix2[0][0]), Write(matrix2[0][9]))
+        self.wait()
+        rnum2 = [four_r1, three_r1, two_r1, one_r1]
+        gmatnum = [matrix2[0][1], matrix2[0][2], matrix2[0][3], matrix2[0][4]]
+        self.play(*[FadeIn(mob) for mob in gmatnum])
+        for i in range(5,9):
+            self.play(Indicate(rnum2[i-5], scale_factor=2), Write(matrix2[0][i]), run_time=0.5)
+        self.wait(2)
+
+class First_Scene_Why(Scene):
+    def construct(self):
+
+        ##Function to Number Square##
+        def NumSq(square):
+            global one, two, three, four, square_group, line1, line2, SQ1Group
+            line1 = Line(square.get_corner(UL)+UP*0.15+LEFT*0.15,
+                            square.get_corner(DR)+DOWN*0.15+RIGHT*0.15)
+            line2 = Line(square.get_corner(DL)+DOWN*0.15+LEFT*0.15,
+                            square.get_corner(UR)+UP*0.15+RIGHT*0.15)
+            one = TexMobject(r"1", color=GREEN).scale(0.5).move_to(line1.get_start())
+            two = TexMobject(r"2", color=GREEN).scale(0.5).move_to(line2.get_start())
+            three = TexMobject(r"3", color=GREEN).scale(0.5).move_to(line1.get_end())
+            four = TexMobject(r"4", color=GREEN).scale(0.5).move_to(line2.get_end())
+            square_group = VGroup(square, line1, line2)
+            nos = [one, two, three, four]
+            self.play(*[Write(num) for num in nos])
+            SQ1Group = VGroup(square, one, two, three, four)
+
+        def update_one(obj):
+            obj.move_to(line1.get_start())
+        def update_two(obj):
+            obj.move_to(line2.get_start())
+        def update_three(obj):
+            obj.move_to(line1.get_end())
+        def update_four(obj):
+            obj.move_to(line2.get_end())
+
+        def SquareRot(square, angle):
+            global square2, one2, two2, three2, four2, SQ2Group
+            square2 = square.copy()
+            one2 = one.copy().set_color(RED).add_updater(update_one)
+            two2 = two.copy().set_color(RED).add_updater(update_two)
+            three2 = three.copy().set_color(RED).add_updater(update_three)
+            four2 = four.copy().set_color(RED).add_updater(update_four)
+            self.add(one2, two2, three2, four2)
+            square2 = VGroup(square2, line1.set_opacity(0), line2.set_opacity(0))
+            SQ2Group = VGroup(square2, one2, two2, three2, four2)
+            self.play(SQ2Group.shift, RIGHT*4)
+            self.play(Rotate(square2, angle), run_time=2)
+            self.wait
+
+        def SquareRefl(square, axis):
+            global square3, one3, two3, three3, four3, SQ3Group, dline
+            square3 = square.copy()
+            one3 = one.copy().set_color(RED).add_updater(update_one)
+            two3 = two.copy().set_color(RED).add_updater(update_two)
+            three3 = three.copy().set_color(RED).add_updater(update_three)
+            four3 = four.copy().set_color(RED).add_updater(update_four)
+            self.add(one3, two3, three3, four3)
+            square3 = VGroup(square3, line1.set_opacity(0), line2.set_opacity(0))
+            SQ3Group = VGroup(square3, one3, two3, three3, four3)
+            self.play(SQ3Group.shift, RIGHT*4)
+            line = Line(ORIGIN, axis)
+            line.move_to(line.get_center()*0 + LEFT+UP)
+            dline = DashedVMobject(line)
+            self.play(ShowCreation(dline))
+            self.play(Rotate(square3, angle=PI, axis=axis), run_time=2)
+            self.wait()
+
+        def MatrixRep(a, b, c, d):
+            str = "\\begin{pmatrix1} 1 & 2 & 3 & 4 \\\\ {} & {} & {} & {}\\end{pmatrix2}".format(a, b , c, d, pmatrix1 = "{pmatrix}", pmatrix2="{pmatrix}")
+            matrix = TexMobject(str)
+            for i in range(1,5):
+                matrix[0][i].set_color(GREEN_D)
+            for j in range(5,9):
+                matrix[0][j].set_color(RED)
+
+            return matrix
+
+        def DrawArrow(angle):
+            global arrow, rota, ang
+            rota = TextMobject("Rotate").scale(0.5).move_to(UP*1.5+LEFT*3)
+            arrow = Arrow(UP+LEFT*4, UP+LEFT*2)
+            ang = TexMobject(r"{}^\circ".format(angle)).scale(0.5).move_to(UP*0.5+LEFT*3)
+            text = [rota, ang]
+            self.play(ShowCreation(arrow), *[Write(mob) for mob in text])
+            #arrow_group = VGroup(arrow, ang, text)
+            self.wait()
+
+        def DrawArrow2(ax):
+            global flip, axis, arrow
+            flip = TextMobject("Flip").scale(0.5).move_to(UP*1.5+LEFT*3)
+            arrow = Arrow(UP+LEFT*4, UP+LEFT*2)
+            axis = TexMobject(r"{}".format(ax)).scale(0.5).move_to(UP*0.5+LEFT*3)
+            text = [flip, axis]
+            self.play(ShowCreation(arrow), *[Write(mob) for mob in text])
+            self.wait()
+
+        def clear_updaters(angle):
+            line1.move_to(LEFT*5+UP).rotate(-angle)
+            line2.move_to(LEFT*5+UP).rotate(-angle)
+
+        def ReFlip(axis):
+            line1.move_to(LEFT*5+UP)
+            line2.move_to(LEFT*5+UP)
+            line1.rotate(angle=PI, axis=axis)
+            line2.rotate(angle=PI, axis=axis)
+
+
+        why = TextMobject("WHY", "?").scale(1.5).move_to(UP*3)
+        why[0].set_color(RED)
+        self.wait()
+        self.play(Write(why), run_time=2)
+        self.wait()
+        sym = TexMobject("All\,\, Symmetries\,\, of\,", "\,Square").move_to(UP*3)
+        sym[1].set_color(RED)
+        self.play(FadeOutAndShift(why, UP), FadeInFromDown(sym, run_time=2))
+        self.wait(3)
+
+        rot = TextMobject("Rotational Symmetries", color=BLUE_D).move_to(UP*3+LEFT*4)
+        square = Square().scale(0.5).move_to(LEFT*5+UP)
+        self.play(FadeOut(sym), TransformFromCopy(sym[1], square, run_time=2),
+        FadeInFrom(rot, UP))
+        self.wait()
+
+        ## Add numbers to the square, and updater to numders##
+        NumSq(square)
+        self.wait(3)
+
+        ## Square Transformation, Rotation by 0 degrees##
+        DrawArrow(0)
+        SquareRot(square, 0)
+        matrix0 = MatrixRep(1, 2, 3, 4).move_to(LEFT*3.5+DOWN*2)
+        gnum = [matrix0[0][i] for i in range(1,5)]
+        rnum = [matrix0[0][i] for i in range(5,9)]
+        self.play(*[Write(obj) for obj in [matrix0[0][0], matrix0[0][9]]])
+        self.play(Indicate(SQ1Group, 2), *[Write(num) for num in gnum])
+        self.play(Indicate(SQ2Group, 2), *[Write(num) for num in rnum])
+        rho_0 = TexMobject(r"\rho_0 \, =", color=YELLOW).move_to(LEFT*6+DOWN*2)
+        self.play(Write(rho_0))
+        matrix0 = VGroup(matrix0, rho_0)
+        clear_updaters(0)
+        self.play(matrix0.scale, 0.5, matrix0.shift, RIGHT*9+UP*5.5,
+                *[FadeOut(obj) for obj in [ang, arrow, rota]], FadeOut(SQ2Group))
+
+        self.wait(2)
+
+        ## Square Transformation, Rotation by 90 degrees##
+        DrawArrow(90)
+        SquareRot(square, PI/2)
+        matrix1 = MatrixRep(2, 3, 4, 1).move_to(LEFT*3.5+DOWN*2)
+        gnum = [matrix1[0][i] for i in range(1,5)]
+        rnum = [matrix1[0][i] for i in range(5,9)]
+        self.play(*[Write(obj) for obj in [matrix1[0][0], matrix1[0][9]]])
+        self.play(Indicate(SQ1Group, 2), *[Write(num) for num in gnum])
+        self.play(Indicate(SQ2Group, 2), *[Write(num) for num in rnum])
+        rho_1 = TexMobject(r"\rho_1 \, =", color=YELLOW).move_to(LEFT*6+DOWN*2)
+        self.play(Write(rho_1))
+        matrix1 = VGroup(matrix1, rho_1)
+        clear_updaters(PI/2)
+        self.play(matrix1.scale, 0.5, matrix1.shift, RIGHT*9+UP*4.5,
+                *[FadeOut(obj) for obj in [ang, arrow, rota]], FadeOut(SQ2Group))
+
+        self.wait(2)
+
+        ## Square Transformation, Rotation by 180 degrees##
+        DrawArrow(180)
+        SquareRot(square, PI)
+        matrix2 = MatrixRep(3, 4, 1, 2).move_to(LEFT*3.5+DOWN*2)
+        gnum = [matrix2[0][i] for i in range(1,5)]
+        rnum = [matrix2[0][i] for i in range(5,9)]
+        self.play(*[Write(obj) for obj in [matrix2[0][0], matrix2[0][9]]])
+        self.play(Indicate(SQ1Group, 2), *[Write(num) for num in gnum])
+        self.play(Indicate(SQ2Group, 2), *[Write(num) for num in rnum])
+        rho_2 = TexMobject(r"\rho_2 \, =", color=YELLOW).move_to(LEFT*6+DOWN*2)
+        self.play(Write(rho_2))
+        matrix2 = VGroup(matrix2, rho_2)
+        clear_updaters(PI)
+        self.play(matrix2.scale, 0.5, matrix2.shift, RIGHT*9+UP*3.5,
+                *[FadeOut(obj) for obj in [ang, arrow, rota]], FadeOut(SQ2Group))
+
+        self.wait(2)
+
+        ## Square Transformation, Rotation by 270 degrees##
+        DrawArrow(270)
+        SquareRot(square, 3*PI/2)
+        matrix3 = MatrixRep(4, 1, 2, 3).move_to(LEFT*3.5+DOWN*2)
+        gnum = [matrix3[0][i] for i in range(1,5)]
+        rnum = [matrix3[0][i] for i in range(5,9)]
+        self.play(*[Write(obj) for obj in [matrix3[0][0], matrix3[0][9]]])
+        self.play(Indicate(SQ1Group, 2), *[Write(num) for num in gnum])
+        self.play(Indicate(SQ2Group, 2), *[Write(num) for num in rnum])
+        rho_3 = TexMobject(r"\rho_3 \, =", color=YELLOW).move_to(LEFT*6+DOWN*2)
+        self.play(Write(rho_3))
+        matrix3 = VGroup(matrix3, rho_3)
+        self.play(matrix3.scale, 0.5, matrix3.shift, RIGHT*9+UP*2.5,
+                *[FadeOut(obj) for obj in [ang, arrow, rota]], FadeOut(SQ2Group))
+        clear_updaters(3*PI/2)
+        self.wait(2)
+
+        ## Square Transformation, Rotation by 270 degrees##
+        DrawArrow(360)
+        SquareRot(square, 0)
+        matrix4 = MatrixRep(1, 2, 3, 4).move_to(LEFT*3.5+DOWN*2)
+        gnum = [matrix4[0][i] for i in range(1,5)]
+        rnum = [matrix4[0][i] for i in range(5,9)]
+        self.play(*[Write(obj) for obj in [matrix4[0][0], matrix4[0][9]]])
+        self.play(Indicate(SQ1Group, 2), *[Write(num) for num in gnum])
+        self.play(Indicate(SQ2Group, 2), *[Write(num) for num in rnum])
+        rho_4 = TexMobject(r"\rho_4 \, =", color=YELLOW).move_to(LEFT*6+DOWN*2)
+        self.play(Write(rho_4))
+        matrix4 = VGroup(matrix4, rho_4)
+        self.play(Indicate(matrix4, 2), Indicate(matrix0, 4))
+        self.play(FadeOut(matrix4), *[FadeOut(obj) for obj in [ang, arrow, rota]],
+                    FadeOut(SQ2Group))
+        clear_updaters(0)
+        self.wait(2)
+
+        ## Reflection Transformations##
+        refl = TextMobject("Reflection Symmetries", color=BLUE_D).move_to(UP*3+LEFT*4)
+        self.play(ReplacementTransform(rot, refl))
+
+        ##Reflection along Y-AXIS##
+        DrawArrow2("Y - Axis")
+        SquareRefl(square, np.array([0,2,0]))
+        matrix5 = MatrixRep(4, 3, 2, 1).move_to(LEFT*3.5+DOWN*2)
+        gnum = [matrix5[0][i] for i in range(1,5)]
+        rnum = [matrix5[0][i] for i in range(5,9)]
+        self.play(*[Write(obj) for obj in [matrix5[0][0], matrix5[0][9]]])
+        self.play(Indicate(SQ1Group, 2), *[Write(num) for num in gnum])
+        self.play(Indicate(SQ3Group, 2), *[Write(num) for num in rnum])
+        mu_1 = TexMobject(r"\mu_1 \, =", color=YELLOW).move_to(LEFT*6+DOWN*2)
+        self.play(Write(mu_1))
+        matrix5 = VGroup(matrix5, mu_1)
+        self.play(matrix5.scale, 0.5, matrix5.shift, RIGHT*9+UP*1.5,
+                *[FadeOut(obj) for obj in [axis, arrow, flip, dline]], FadeOut(SQ3Group))
+        ReFlip(np.array([0,2,0]))
+        self.wait(2)
+
+        ##Reflection along X-AXIS##
+        DrawArrow2("X - Axis")
+        SquareRefl(square, np.array([2,0,0]))
+        matrix6 = MatrixRep(2, 1, 4, 3).move_to(LEFT*3.5+DOWN*2)
+        gnum = [matrix6[0][i] for i in range(1,5)]
+        rnum = [matrix6[0][i] for i in range(5,9)]
+        self.play(*[Write(obj) for obj in [matrix6[0][0], matrix6[0][9]]])
+        self.play(Indicate(SQ1Group, 2), *[Write(num) for num in gnum])
+        self.play(Indicate(SQ3Group, 2), *[Write(num) for num in rnum])
+        mu_2 = TexMobject(r"\mu_2 \, =", color=YELLOW).move_to(LEFT*6+DOWN*2)
+        self.play(Write(mu_2))
+        matrix6 = VGroup(matrix6, mu_2)
+        self.play(matrix6.scale, 0.5, matrix6.shift, RIGHT*9+UP*0.5,
+                *[FadeOut(obj) for obj in [axis, arrow, flip, dline]], FadeOut(SQ3Group))
+        ReFlip(np.array([2,0,0]))
+        self.wait(2)
+
+        ##Reflection along DIAGONAL 1, 3##
+        DrawArrow2("Diag\, 1-3")
+        SquareRefl(square, np.array([-2,2,0]))
+        matrix7 = MatrixRep(1 , 4, 3, 2).move_to(LEFT*3.5+DOWN*2)
+        gnum = [matrix7[0][i] for i in range(1,5)]
+        rnum = [matrix7[0][i] for i in range(5,9)]
+        self.play(*[Write(obj) for obj in [matrix7[0][0], matrix7[0][9]]])
+        self.play(Indicate(SQ1Group, 2), *[Write(num) for num in gnum])
+        self.play(Indicate(SQ3Group, 2), *[Write(num) for num in rnum])
+        delta_1 = TexMobject(r"\delta_1 \, =", color=YELLOW).move_to(LEFT*6+DOWN*2)
+        self.play(Write(delta_1))
+        matrix7 = VGroup(matrix7, delta_1)
+        self.play(matrix7.scale, 0.5, matrix7.shift, RIGHT*9+DOWN*0.5,
+                *[FadeOut(obj) for obj in [axis, arrow, flip, dline]], FadeOut(SQ3Group))
+        ReFlip(np.array([-2,2,0]))
+        self.wait(2)
+
+        ##Reflection along DIAGONAL 2, 4##
+        DrawArrow2("Diag\, 2-4")
+        SquareRefl(square, np.array([2,2,0]))
+        matrix8 = MatrixRep(3 , 2, 1, 4).move_to(LEFT*3.5+DOWN*2)
+        gnum = [matrix8[0][i] for i in range(1,5)]
+        rnum = [matrix8[0][i] for i in range(5,9)]
+        self.play(*[Write(obj) for obj in [matrix8[0][0], matrix8[0][9]]])
+        self.play(Indicate(SQ1Group, 2), *[Write(num) for num in gnum])
+        self.play(Indicate(SQ3Group, 2), *[Write(num) for num in rnum])
+        delta_2 = TexMobject(r"\delta_2 \, =", color=YELLOW).move_to(LEFT*6+DOWN*2)
+        self.play(Write(delta_2))
+        matrix8 = VGroup(matrix8, delta_2)
+        self.play(matrix8.scale, 0.5, matrix8.shift, RIGHT*9+DOWN*1.5,
+                *[FadeOut(obj) for obj in [axis, arrow, flip, dline]], FadeOut(SQ3Group))
+        ReFlip(np.array([2,2,0]))
+        self.wait(2)
