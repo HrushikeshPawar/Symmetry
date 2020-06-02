@@ -1140,3 +1140,6 @@ class First_Scene_Why(Scene):
                 *[FadeOut(obj) for obj in [axis, arrow, flip, dline]], FadeOut(SQ3Group))
         ReFlip(np.array([2,2,0]))
         self.wait(2)
+
+        self.play(*[FadeOut(mob) for mob in [SQ1Group, refl]], run_time=2)
+        self.wait(4)
