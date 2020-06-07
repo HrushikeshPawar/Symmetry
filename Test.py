@@ -119,6 +119,144 @@ class SVG(Scene):
         self.wait(2)
         """
 
+class First_Scene_What(Scene):
+    def construct(self):
+        order = TextMobject("Order").set_color(RED).scale(1.5)
+        sym = TextMobject("Symmetry").set_color(RED).scale(1.5)
+        lim = TextMobject("Limitation").set_color(RED).scale(1.5)
+
+        order.move_to(ORIGIN + UP*2.5 + LEFT*4)
+        sym.move_to(ORIGIN + UP*2.5 + LEFT*0.4)
+        lim.move_to(ORIGIN + UP*2.5 + RIGHT*4)
+
+        self.wait()
+        self.play(FadeIn(order))
+        self.wait()
+        self.play(FadeIn(sym))
+        self.wait()
+        self.play(FadeIn(lim))
+
+        Sym = TexMobject(r"Symmetry").move_to(UP*3).scale(2)
+        self.wait(3)
+        #line = Line(UP*2.5 + LEFT*8, UP*2.5 + RIGHT*8)
+        self.play(FadeOut(order), FadeOut(lim))
+        self.play(ReplacementTransform(sym, Sym))
+        self.wait()
+
+
+        what = TextMobject(
+                            "Symmetry",
+                            "  -  ",
+                            "What",
+                            "  ? "
+        ).move_to(UP*3).scale(2)
+        what[2].set_color(RED)
+        self.play(ReplacementTransform(Sym, what), runtime = 2)
+        self.wait()
+
+        sym = TextMobject("General  Language").set_color(BLUE_E)
+        sym.move_to(UP*3)
+        self.play(FadeOutAndShift(what, UP), FadeInFromDown(sym, run_time=2))
+        self.wait(3)
+
+        trees = SVGMobject("My_Projects/Symmetry/SVG/Asymmetric.svg",
+        color = WHITE, fill_opacity=0, stroke_width=1).scale(1.5)
+        self.play(ShowCreation(trees, run_time=3))
+        self.wait(2)
+        self.play(trees.scale, 0.3, trees.shift, UP+ RIGHT*5)
+        self.wait(2)
+
+        fly = SVGMobject("My_Projects/Symmetry/SVG/BFly.svg",
+        color = WHITE, fill_opacity=0, stroke_width=1).scale(1.5)
+        line = Line(UP*2, DOWN*2)
+        dline = DashedVMobject(line)
+        self.play(ShowCreation(fly, run_time=10))
+        self.wait(2)
+        self.play(ShowCreation(dline))
+        self.wait(2)
+        group1 = VGroup(fly, dline)
+        self.play(group1.shift, LEFT*3)
+        self.wait(2)
+        self.play(trees.scale, 2, trees.shift, DOWN+ LEFT*3)
+        self.wait(5)
+        self.play(FadeOut(trees), FadeOut(group1))
+        self.wait(3)
+
+class Second_Scene_What(Scene):
+    def construct(self):
+        #Objects from Last Scene
+        sym = TextMobject("General  Language").set_color(BLUE_E)
+        sym.move_to(UP*3)
+        self.add(sym)
+        self.wait(2)
+        self.play(FadeOut(sym))
+
+
+        #Begin with Geometrical Definition
+        geom = TexMobject(r"Geometry").set_color(BLUE_E).move_to(UP*3)
+        self.play(Write(geom), run_time=2)
+        self.wait(3)
+
+        #Start with an Isoceles Triangle
+        iso = Polygon(UP, DOWN+LEFT, DOWN+RIGHT).set_color(GREEN_D)
+        iso.set_fill(GREEN_D, opacity=1)
+        self.play(DrawBorderThenFill(iso))
+        self.wait(3)
+        line2 = Line(UP*1.5, DOWN*1.5)
+        dline2 = DashedVMobject(line2)
+        self.play(ShowCreation(dline2))
+        self.wait(3)
+        group1 = VGroup(iso, dline2)
+        self.play(group1.scale,0.3, group1.shift, RIGHT*5.5)
+        self.wait(2)
+
+        #Now an Equivlateral triangle
+        triangle = Triangle().set_color(RED).set_fill(RED, opacity=1)
+        self.play(DrawBorderThenFill(triangle))
+        self.wait(3)
+        line1 = Line(UP*1.5, DOWN*1.5)
+        dline1 = DashedVMobject(line1)
+        self.play(ShowCreation(dline1))
+        lists = []
+        boxes = [0]*3
+        for i in range(1, 3):
+            boxes[i]= dline1.copy().rotate(2*(PI/3)*i)
+            self.play(ShowCreation(boxes[i]))
+        self.wait()
+        group2 = VGroup(triangle, dline1, boxes[1], boxes[2])
+        self.play(group2.scale,0.3, group2.shift, DOWN*1.2 + RIGHT*5.5)
+        self.wait(2)
+
+        #Finally a star shape
+        star = SVGMobject("My_Projects/Symmetry/SVG/Star.svg",
+        color = WHITE, opacity=1, stroke_width=1).scale(1.5)
+        self.wait()
+        self.play(DrawBorderThenFill(star), run_time=3)
+        self.wait()
+        line = Line(UP*2, DOWN*2)
+        dline2 = DashedVMobject(line)
+        self.play(ShowCreation(dline2))
+        self.wait()
+        lists = []
+        boxes = [0]*6
+        for i in range(1, 6):
+            boxes[i]= dline2.copy().rotate((PI/6)*i)
+            self.play(ShowCreation(boxes[i]))
+        self.wait(3)
+        group3 = VGroup(star,dline2, boxes[1],boxes[2],boxes[3],boxes[4],boxes[5])
+        self.play(group3.scale, 0.3, group3.shift, DOWN*2.5 + RIGHT*5.5)
+        self.wait(2)
+
+
+        #Reflection Symmetry
+        refsym = TextMobject("Reflection Symmetry").move_to(UP*1.5 + RIGHT*5.5).scale(0.7)
+        self.play(Write(refsym, run_time=2))
+        self.wait()
+
+        ref_group = VGroup(refsym, group1, group2, group3)
+        ref_group.set_opacity(0.5)
+        self.wait(4)
+
 class SecondScene(Scene):
     def construct(self):
         #Objects from Last Scene
@@ -169,6 +307,109 @@ class SecondScene(Scene):
         self.play(Rotating(rect1, radians=PI, axis = UP, about_edge = RIGHT,
          run_time = 2))
         rect1.set_color = RED
+        self.wait(3)
+
+class Third_Scene_What(Scene):
+    def construct(self):
+
+        def Copy_animation(object, angles):
+            n=0
+            for i in angles:
+                self.play(object.shift, LEFT*3)
+                object1 = object.copy().set_color(RED).set_fill(RED)
+                self.play(object1.shift, RIGHT*4.5)
+                arrow = CurvedArrow(LEFT, RIGHT, angle= PI/4).move_to(DOWN*2+RIGHT*1.5)
+                text = "{}^\circ".format(i)
+                ang = TexMobject(text).next_to(arrow, DOWN)
+                self.play(ShowCreation(arrow), Write(ang))
+                self.play(Rotate(object1, i*DEGREES, run_time=2))
+                self.play(FadeOut(arrow), FadeOut(ang))
+                self.play(object.shift, RIGHT*3, object1.shift,LEFT*1.5)
+                self.play(FadeOut(object1))
+                n += 1
+
+        #Create Last SCENE
+        geom = TexMobject(r"Geometry").set_color(BLUE).move_to(UP*3)
+
+        iso = Polygon(UP, DOWN+LEFT, DOWN+RIGHT).set_color(GREEN_D)
+        iso.set_fill(GREEN_D, opacity=1)
+        line2 = Line(UP*1.5, DOWN*1.5)
+        dline2 = DashedVMobject(line2)
+        group1 = VGroup(iso, dline2).scale(0.3).shift(RIGHT*5.5)
+
+        triangle = Triangle().set_color(RED).set_fill(RED, opacity=1)
+        line1 = Line(UP*1.5, DOWN*1.5)
+        dline1 = DashedVMobject(line1)
+        lists = []
+        boxes = [0]*3
+        for i in range(1, 3):
+            boxes[i]= dline1.copy().rotate(2*(PI/3)*i)
+        group2 = VGroup(triangle, dline1, boxes[1], boxes[2])
+        group2.scale(0.3).shift(DOWN*1.2 + RIGHT*5.5)
+
+        star = SVGMobject("My_Projects/Symmetry/SVG/Star.svg",
+        color = WHITE, opacity=1, stroke_width=1).scale(1.5)
+        line = Line(UP*2, DOWN*2)
+        dline2 = DashedVMobject(line)
+        lists = []
+        boxes = [0]*6
+        for i in range(1, 6):
+            boxes[i]= dline2.copy().rotate((PI/6)*i)
+        group3 = VGroup(star,dline2, boxes[1],boxes[2],boxes[3],boxes[4],boxes[5])
+        group3.scale(0.3).shift(DOWN*2.5 + RIGHT*5.5)
+
+        refsym = TextMobject("Reflection Symmetry").move_to(UP*1.5 + RIGHT*5.5).scale(0.7)
+        ref_group = VGroup(refsym, group1, group2, group3)
+        ref_group.set_opacity(0.5)
+
+        self.add(geom, ref_group)
+        self.wait(2)
+        #Done creating previous Scene
+
+        #Start with Rotational symmetry
+        #First Check that reflection symmetry fails
+        hexa = SVGMobject("My_Projects/Symmetry/SVG/Rotate.svg", color=BLUE_D,
+        fill_opacity = 0, stroke_width=1).scale(1.5)
+        self.play(ShowCreation(hexa, run_time=4))
+        self.wait(2)
+
+        for i in [UP, RIGHT, np.array([1,0.57735,0])]:
+            self.play(hexa.shift, LEFT*3)
+            hexa1 = hexa.copy().set_color(RED)
+            self.play(hexa1.shift, RIGHT*4.5)
+            line = Line(RIGHT*1.5 + i*2, RIGHT*1.5 + i*(-2))
+            dline = DashedVMobject(line)
+            self.play(ShowCreation(dline))
+            self.play(Rotate(hexa1, PI, i))
+            group = VGroup(dline, hexa1)
+            self.wait(2)
+            self.play(hexa.shift, RIGHT*3, group.shift,LEFT*1.5)
+            self.wait(2)
+            self.play(FadeOut(group))
+
+        #Now Introduce the Rotational symmetry
+        Copy_animation(hexa, [60,120,180])
+        self.wait(2)
+        self.play(hexa.scale, 0.3, hexa.move_to, LEFT*5 + DOWN*1.5)
+        self.wait(2)
+
+        square = Square(color=GREEN, fill_opacity=1).set_fill(GREEN)
+        self.play(DrawBorderThenFill(square), run_time=2)
+        self.wait()
+        Copy_animation(square, [90, 180, 270])
+        self.wait(2)
+        self.play(square.scale, 0.3, square.move_to, LEFT*5 + DOWN*3)
+        self.wait(3)
+
+        rotsym = TextMobject("Rotational Symmtery").move_to(LEFT*5).scale(0.7)
+        self.play(Write(rotsym))
+        self.wait(2)
+        rot_group  = VGroup(rotsym, hexa, square)
+        self.play(rot_group.scale, 1, rot_group.next_to, rot_group.get_center()*0 + LEFT*4,
+        ref_group.set_opacity, 1, ref_group.scale, 1,
+        ref_group.shift, LEFT*3.5)
+        self.wait(5)
+        self.play(FadeOut(rot_group, run_time=5),FadeOut(ref_group, run_time=5))
         self.wait(3)
 
 class Rotation_What(Scene):
@@ -414,48 +655,25 @@ class Summary_What(Scene):
         self.wait(2)
 
         #For Abstract Definition
-        self.play(scene.set_opacity, 0)
-        inv = TextMobject("Invariance").move_to(UP*3+RIGHT*5)
-        op1 = TextMobject("Operations").move_to(UP*3+ LEFT*5)
-        op2 = TextMobject("Transformation").move_to(UP*3)
-        self.add(op1)
-        self.add(op2)
-        self.add(inv)
+        self.play(scene.set_opacity, 0.1)
+        inv = TextMobject("Invariance").move_to(RIGHT*4+DOWN*2.1).scale(0.7)
+        op1 = TextMobject("Operations").move_to(RIGHT*4+DOWN*0.7).scale(0.7)
+        op2 = TextMobject("Transformation").move_to(RIGHT*4+DOWN*1.4).scale(0.7)
+        #self.add(op1)
+        #self.add(op2)
+        #self.add(inv)
         self.wait()
 
-        square = Square(color=BLUE_D).move_to(LEFT*4)
-        arrow1 = Arrow(DOWN*2.5+LEFT*4,LEFT*4+DOWN*1.5)
-        text1 = TextMobject("Mathematical\\ Object").move_to(DOWN*3+LEFT*4).scale(0.5)
-        self.play(ShowCreation(square))
-        self.play(FadeInFromDown(arrow1), FadeInFromDown(text1))
+        definition = TextMobject("''Symmetry is a type of ", "invariance",", a property of a mathematical objects remains unchanged, ","under a set of ","operations ","or ","transformations", ".''").scale(2)
+        definition[1].set_color(RED)
+        definition[4].set_color(GREEN)
+        definition[6].set_color(GREEN)
+        definition.scale(1.7).set_width(10)
+        self.play(FadeInFrom(definition, run_time=3))
+        self.wait()
 
-        arrow2 = Arrow(LEFT*2, ORIGIN)
-        text2 = TextMobject("Rotate").move_to(LEFT + UP*0.5).scale(0.7)
-        text3 = TexMobject(r"90^{\circ}").move_to(LEFT+DOWN*0.5).scale(0.7)
-        arrow3 = Arrow(LEFT + UP*1.5, LEFT+UP*0.5)
-        self.play(FadeIn(arrow2), FadeIn(text2),FadeIn(text3))
-        self.play(ShowCreation(arrow3),op1.scale, 0.5, op1.next_to, arrow3,UP)
-
-        square2 = square.copy().set_color(RED)
-        self.play(square2.shift, RIGHT*6)
-        self.play(op2.shift, UP*3)
-        op2 = TextMobject("Transformation").scale(0.5).move_to(RIGHT*2+DOWN*3)
-        arrow4 = Arrow(DOWN*2.5+RIGHT*2,DOWN*1.5+RIGHT*2)
-        self.play(FadeInFromDown(arrow4), FadeInFromDown(op2))
-        self.play(Rotate(square2, PI/2))
-
-        arrow5 = Arrow(RIGHT*4, RIGHT*3)
-        square3 = square.copy()
-        self.play(FadeIn(arrow5), inv.scale, 0.5, inv.next_to, arrow5,RIGHT,
-        square3.shift, RIGHT*6)
-
-        group = VGroup(arrow1, arrow2, arrow3, arrow4, arrow5, square, square2,
-        square3, text2, text3)
-
-        self.play(text1.move_to, text1.get_center()*0 +RIGHT*4, FadeOut(group),
-        op1.move_to, op1.get_center()*0+RIGHT*4+DOWN*0.7,
-        op2.move_to, op2.get_center()*0+RIGHT*4+DOWN*1.4,
-        inv.move_to, inv.get_center()*0+RIGHT*4+DOWN*2.1, scene.set_opacity, 1)
+        text1 = TextMobject("Mathematical Object").move_to(RIGHT*4).scale(0.7)
+        self.play(FadeOut(definition), Write(text1), Write(inv), Write(op1), Write(op2), scene.set_opacity, 1, run_time=2)
         self.wait(3)
 
 class How(Scene):
@@ -524,7 +742,21 @@ class How2(Scene):
         def update_four(obj):
             obj.move_to(line2.get_end())
 
-        ##Creating and playing Text (Mathematical Representation)
+        def CreateMatrix( a, b, c, d, pos1, pos2, pos3, pos4):
+            pos = [pos1, pos2, pos3, pos4]
+            num = [a, b, c, d]
+            for i in range(4):
+                if (pos[i]==one) or (pos[i]==four):
+                    carrow = CurvedArrow(num[i].get_center(), pos[i].get_center(),
+                    angle=PI/3).scale(0.9)
+                elif (pos[i]==two) or (pos[i]==three):
+                    carrow = CurvedArrow(num[i].get_center(), pos[i].get_center(),
+                    angle=-PI/3).scale(0.9)
+
+                self.play(ShowCreation(carrow))
+                self.play(FadeOut(carrow))
+                self.remove(carrow)
+        ##  Creating and playing Text (Mathematical Representation)  ##
         mat = TextMobject("Mathematical Representation", color=BLUE_D)
         mat.move_to(UP*3.5+LEFT*3)
         self.wait()
@@ -588,14 +820,14 @@ class How2(Scene):
         self.play(ShowCreation(one_1), ShowCreation(two_1), ShowCreation(three_1),
         ShowCreation(four_1))
 
-        carrow1 = CurvedArrow(one.get_center(), square2.get_corner(UL),
-        angle=-PI/4, buff=10).scale(0.9)
-        carrow2 = CurvedArrow(two.get_center(), square2.get_corner(DL),
-        angle=PI/4, buff=10).scale(0.9)
-        carrow3 = CurvedArrow(three.get_center(), square2.get_corner(DR),
-        angle=PI/4, buff=10).scale(0.9)
-        carrow4 = CurvedArrow(four.get_center(), square2.get_corner(UR),
-        angle=-PI/4, buff=10).scale(0.9)
+        carrow1 = CurvedArrow(one1.get_center(), three.get_center(),
+        angle=-PI/4).scale(0.9)
+        carrow2 = CurvedArrow(two2.get_center(), four.get_center(),
+        angle=PI/4).scale(0.9)
+        carrow3 = CurvedArrow(three3.get_center(), one.get_center(),
+        angle=PI/4).scale(0.9)
+        carrow4 = CurvedArrow(four4.get_center(), two.get_center(),
+        angle=-PI/4).scale(0.9)
 
         arrow1 = Arrow(RIGHT*3+UP*2.5, RIGHT*4+UP*2.5)
         arrow2 = Arrow(RIGHT*3+UP*2, RIGHT*4+UP*2)
@@ -631,9 +863,7 @@ class How2(Scene):
         text_fade.add(ref, ax)
 
 
-        self.play(square3.shift, DOWN*3.5)#, one.copy().shift, DOWN*3.5,
-        #two.copy().shift, DOWN*3.5, three.copy().shift, DOWN*3.5,
-        #four.copy().shift, DOWN*3.5)
+        self.play(square3.shift, DOWN*3.5)
         self.wait()
         self.play(ShowCreation(arrow5), Write(ref), Write(ax))
         self.wait()
@@ -698,14 +928,14 @@ class How2(Scene):
         ShowCreation(arrow_3), ShowCreation(arrow_4))
         self.wait()
 
-        carrow_1 = CurvedArrow(square3.get_corner(UL), square4.get_corner(UL),
-        angle=-PI/4, buff=10).scale(0.9)
-        carrow_2 = CurvedArrow(square3.get_corner(DL), square4.get_corner(DL),
-        angle=PI/4, buff=10).scale(0.9)
-        carrow_3 = CurvedArrow(square3.get_corner(DR), square4.get_corner(DR),
-        angle=PI/4, buff=10).scale(0.9)
-        carrow_4 = CurvedArrow(square3.get_corner(UR), square4.get_corner(UR),
-        angle=-PI/4, buff=10).scale(0.9)
+        carrow_1 = CurvedArrow(square4.get_corner(UR), square3.get_corner(UR),
+        angle=PI/4).scale(0.9)
+        carrow_2 = CurvedArrow(square4.get_corner(DR), square3.get_corner(DR),
+        angle=-PI/4).scale(0.9)
+        carrow_3 = CurvedArrow(square4.get_corner(DL), square3.get_corner(DL),
+        angle=-PI/4).scale(0.9)
+        carrow_4 = CurvedArrow(square4.get_corner(UL), square3.get_corner(UL),
+        angle=PI/4).scale(0.9)
 
         one5 = one.copy().set_color(RED).move_to(one.get_center()*0+RIGHT*4+DOWN*3)
         two5 = two.copy().set_color(RED).move_to(two.get_center()*0+RIGHT*4+DOWN*2.5)
@@ -1393,14 +1623,9 @@ class PreparationForTable(Scene):
         self.wait()
 
         ## Permanant Matrix for Starting Position ##
-        str = "\\begin{pmatrix1} 1 & 2 & 3 & 4 \\\\ 1 & 2 & 3 & 4 \\end{pmatrix2}".format(pmatrix1 = "{pmatrix}", pmatrix2="{pmatrix}")
-        matrix = TexMobject(str)
-        for i in range(1,5):
-            matrix[0][i].set_color(GREEN_D)
-        for j in range(5,9):
-            matrix[0][j].set_color(RED)
-        matrix.move_to(UP*3+RIGHT*2).scale(0.7)
+        matrix = Dot().move_to(UP*5)
         Table_Group.add(matrix)
+
 
         ## Permanant Square for Starting Position ##
         square = Square().scale(0.5).move_to(LEFT*5.5+DOWN*2)
@@ -1920,9 +2145,9 @@ class Properties(Scene):
             #   Property 2 in words #
             prop2_1 = TexMobject(
                                     "(\\,\\text{ i.e }",            #0
-                                    "\\text{ Existance of }",       #1
+                                    "\\text{ Existence of }",       #1
                                     "Identity",                     #2
-                                    "\\text{ elemet}",              #3
+                                    "\\text{ element}",              #3
                                     "\\,)"                          #4
             ).scale(0.7)
             #   Set Color#
@@ -1978,7 +2203,7 @@ class Properties(Scene):
             prop3_1 = TexMobject(
                                     "(\\,",                         #0
                                     "\\text{i.e}\\ \\",             #1
-                                    "\\text{Existance  of} \\ \\",  #2
+                                    "\\text{Existence  of} \\ \\",  #2
                                     "Inverse",                      #3
                                     "\\ \\ )"                       #4
             ).scale(0.7)
@@ -2073,14 +2298,13 @@ class Properties(Scene):
             # Property 5 in Words #
             prop5_1 = TexMobject(
                                     "(\\, i.e\\ \\",    #0
-                                    "\\text{Group}\\,", #1
-                                    "G",                #2
-                                    "\\text{ is }",     #3
-                                    "Non-Abelian",      #4
-                                    ")"                 #5
+                                    "G",                #1
+                                    "\\text{ is }",     #2
+                                    "Non-Abelian",      #3
+                                    ")"                 #4
             ).scale(0.7)
-            prop5_1[2].set_color(GREEN_D)
-            prop5_1[4].set_color(RED)
+            prop5_1[1].set_color(GREEN_D)
+            prop5_1[3].set_color(RED)
             #   Move to required position   #
             prop5[0].next_to(prop4[0], DOWN*2)
             prop5[1:].next_to(prop5[0])
@@ -2387,10 +2611,11 @@ class Rectangle(Scene):
             two = TexMobject(r"2", color=GREEN).scale(0.5).move_to(line2.get_start())
             three = TexMobject(r"3", color=GREEN).scale(0.5).move_to(line1.get_end())
             four = TexMobject(r"4", color=GREEN).scale(0.5).move_to(line2.get_end())
-            rectangle_group = VGroup(rectangle, line1, line2)
+            rectangle_group = VGroup(rectangle, line1.set_opacity(0), line2.set_opacity(0))
             nos = [one, two, three, four]
             self.play(*[Write(num) for num in nos])
-            RQ1Group = VGroup(rectangle, one, two, three, four)
+            RQ1Group = VGroup(rectangle_group, one, two, three, four,)
+            group.add(RQ1Group)
 
         ## Updater Functions ##
         def update_one(obj):
@@ -2402,20 +2627,30 @@ class Rectangle(Scene):
         def update_four(obj):
             obj.move_to(line2.get_end())
 
-        def RectangleRot(rectangle, angle, matrix):
+        def RectangleRot(rectangle, angle, matrix, pos, sym):
             global one2, two2, three2, four2, RQ2Group
+
+            #  Copy rectangle  #
             rectangle2 = rectangle.copy()
+
+            #  Copy Numbers  #
             one2 = one.copy().set_color(RED).add_updater(update_one)
             two2 = two.copy().set_color(RED).add_updater(update_two)
             three2 = three.copy().set_color(RED).add_updater(update_three)
             four2 = four.copy().set_color(RED).add_updater(update_four)
             self.add(one2, two2, three2, four2)
+
+            #  Create Required Groups  #
             rectangle2 = VGroup(rectangle2, line1.set_opacity(0), line2.set_opacity(0))
             RQ2Group = VGroup(rectangle2, one2, two2, three2, four2)
-            self.play(RQ2Group.shift, RIGHT*4)
-            self.play(Rotate(rectangle2, angle), Write(matrix), run_time=2)
-            group.add(RQ2Group)
-            return rectangle2
+
+            # Performed Required Action  #
+            self.play(RQ2Group.shift, RIGHT*4.5)
+            self.play(Rotate(rectangle2, angle))
+            matrix = CreateMatrix(obj=rectangle, matrix=matrix, a=one2, b=two2, c=three2,
+                    d=four2,pos1=pos[0], pos2=pos[1], pos3=pos[2], pos4=pos[3], sym=sym)
+
+            return rectangle2, matrix
 
         def CheckRot(rectangle, angle, op, value):
             rectangle2 = rectangle.copy()
@@ -2426,29 +2661,363 @@ class Rectangle(Scene):
             self.add(one2, two2, three2, four2)
             rectangle2 = VGroup(rectangle2, line1.set_opacity(0), line2.set_opacity(0))
             RQ2Group = VGroup(rectangle2, one2, two2, three2, four2)
-            self.play(ShowCreation(DrawArrow(rectangle, op=op, value=value)))
-            self.play(RQ2Group.shift, RIGHT*5)
+            arrow = DrawArrow(rectangle, op=op, value=value)
+            self.play(ShowCreation(arrow))
+            self.play(RQ2Group.shift, RIGHT*4.5)
             self.play(Rotate(rectangle2, angle), run_time=2)
             self.wait()
             copy = rectangle.copy().set_color(RED)
-            self.play(copy.shift, RIGHT*5)
+            self.play(copy.shift, RIGHT*4.5)
+            self.wait()
+            group.add(RQ2Group, rectangle2)
+            return copy, rectangle2, arrow
 
-        def RectangleRefl(rectangle, axis, matrix):
+        def RectangleRefl(rectangle, axis, matrix, pos, sym):
             global one3, two3, three3, four3, RQ3Group, dline
+
+            #  Copy Rectangle  #
             rectangle3 = rectangle.copy()
+
+            #  Copy Numbers  #
             one3 = one.copy().set_color(RED).add_updater(update_one)
             two3 = two.copy().set_color(RED).add_updater(update_two)
             three3 = three.copy().set_color(RED).add_updater(update_three)
             four3 = four.copy().set_color(RED).add_updater(update_four)
             self.add(one3, two3, three3, four3)
+
+            #  Create Required Groups  #
             rectangle3 = VGroup(rectangle3, line1.set_opacity(0), line2.set_opacity(0))
             RQ3Group = VGroup(rectangle3, one3, two3, three3, four3)
-            self.play(RQ3Group.shift, RIGHT*2.5)
-            line = Line(ORIGIN, axis)
+
+            #  Create Line  #
+            self.play(RQ3Group.shift, RIGHT*4.5)
+            line = Line(ORIGIN, axis).scale(2.5)
             line.move_to(line.get_center()*0 + RQ3Group.get_center())
             dline = DashedVMobject(line)
+
+            #  Perform Required Action  #
             self.play(ShowCreation(dline, run_time=0.5))
-            self.play(Rotate(rectangle3, angle=PI, axis=axis), Write(matrix))
+            self.play(Rotate(rectangle3, angle=PI, axis=axis))
+            matrix = CreateMatrix(obj=rectangle, matrix=matrix, a=one3, b=two3, c=three3,
+                    d=four3, pos1=pos[0], pos2=pos[1], pos3=pos[2], pos4=pos[3], sym=sym)
+
+            return rectangle3, matrix
+
+        def CheckRefl(rectangle, axis, op, value):
+            global dline
+            #  Copy Rectangle  #
+            rectangle3 = rectangle.copy()
+
+            #  Copy Numbers  #
+            one3 = one.copy().set_color(RED).add_updater(update_one)
+            two3 = two.copy().set_color(RED).add_updater(update_two)
+            three3 = three.copy().set_color(RED).add_updater(update_three)
+            four3 = four.copy().set_color(RED).add_updater(update_four)
+            self.add(one3, two3, three3, four3)
+
+            #  Create Required Groups  #
+            rectangle3 = VGroup(rectangle3, line1.set_opacity(0), line2.set_opacity(0))
+            RQ3Group = VGroup(rectangle3, one3, two3, three3, four3)
+
+            #  Draw Arrow  #
+            arrow = DrawArrow(rectangle, op=op, value=value)
+            self.play(ShowCreation(arrow))
+
+            #  Create Line  #
+            self.play(RQ3Group.shift, RIGHT*4.5)
+            line = Line(ORIGIN, axis).scale(2)
+            line.move_to(line.get_center()*0 + RQ3Group.get_center())
+            dline = DashedVMobject(line)
+
+
+            #  Perform Required Action  #
+            self.play(ShowCreation(dline, run_time=0.5))
+            self.play(Rotate(rectangle3, angle=PI, axis=axis))
+
+            copy = rectangle.copy().set_color(RED)
+            self.play(copy.shift, RIGHT*4.5)
+            self.wait()
+            group.add(RQ3Group, rectangle3)
+            return copy, rectangle3, arrow
+
+        def MatrixRep(a, b, c, d):
+            str = "\\begin{pmatrix1} 1 & 2 & 3 & 4 \\\\ {} & {} & {} & {}\\end{pmatrix2}".format(a, b , c, d, pmatrix1 = "{pmatrix}", pmatrix2="{pmatrix}")
+            matrix = TexMobject(str)
+            for i in range(1,5):
+                matrix[0][i].set_color(GREEN_D)
+            for j in range(5,9):
+                matrix[0][j].set_color(RED)
+
+            return matrix
+
+        def CreateMatrix(obj, matrix, a, b, c, d, pos1, pos2, pos3, pos4, sym):
+
+            self.play(Write(matrix[0][0]), Write(matrix[0][9]))
+            self.play(Write(matrix[0][1:5]))
+            pos = [pos1, pos2, pos3, pos4]
+            num = [a, b, c, d]
+            for i in range(4):
+                if (pos[i]==one) or (pos[i]==four):
+                    carrow = CurvedArrow(num[i].get_center(), pos[i].get_center(),
+                    angle=PI/3).scale(0.9)
+                elif (pos[i]==two) or (pos[i]==three):
+                    carrow = CurvedArrow(num[i].get_center(), pos[i].get_center(),
+                    angle=-PI/3).scale(0.9)
+
+                self.play(ShowCreation(carrow), Write(matrix[0][i+5]))
+                self.play(FadeOut(carrow))
+                self.remove(carrow)
+
+            symbol = TexMobject("\\{}".format(sym), "\\ \\ =").scale(0.7).next_to(matrix, LEFT)
+            self.wait()
+            self.play(Write(symbol))
+            matrix = VGroup(matrix, symbol)
+            return matrix
+
+        def DrawArrow(obj, op, value):
+            global arrow_group1
+            arrow = Arrow(ORIGIN, RIGHT*2).next_to(obj, RIGHT*1.5)
+            operation = TexMobject("{}".format(op)).scale(0.5).next_to(arrow, UP*0.5)
+            value = TexMobject("{}".format(value)).scale(0.5).next_to(arrow, DOWN*0.5)
+            arrow_group = VGroup(arrow, operation, value)
+            return arrow_group
+
+        def clear_updaters(angle):
+            line1.move_to(LEFT*4).rotate(-angle)
+            line2.move_to(LEFT*4).rotate(-angle)
+
+        def ReFlip(axis):
+            line1.rotate(angle=PI, axis=axis)
+            line2.rotate(angle=PI, axis=axis)
+
+        def Transform(obj, op, value, a=1, b=2, c=3, d=4, sym="rho_0", angle=PI, axis=IN, rotate=True, refl=False, check=False, pos=[], i=2):
+            if(rotate==True and refl==False and check==False):
+                a1 = DrawArrow(obj, op, value)
+                self.play(ShowCreation(a1), run_time=0.5)
+                matrix = MatrixRep(a, b, c, d).next_to(obj, DOWN*5).scale(0.8)
+                shape = RectangleRot(rectangle=obj, angle=angle, pos=pos, matrix=matrix, sym=sym)
+                rectangle = shape[0]
+                matrix = shape[1]
+                one2.remove_updater(update_one)
+                two2.remove_updater(update_two)
+                three2.remove_updater(update_three)
+                four2.remove_updater(update_four)
+                self.play(FadeOut(a1), FadeOut(RQ2Group))
+                clear_updaters(angle)
+                self.play(matrix.scale, 0.7, matrix.shift, RIGHT*9+UP*i)
+                return rectangle, matrix
+
+            elif(rotate==False and refl==True and check==False):
+                a1 = DrawArrow(obj, op, value)
+                self.play(ShowCreation(a1), run_time=0.5)
+                matrix = MatrixRep(a, b, c, d).next_to(obj, DOWN*5).scale(0.8)
+                shape = RectangleRefl(rectangle=obj, axis=axis, pos=pos, matrix=matrix, sym=sym)
+                rectangle = shape[0]
+                matrix = shape[1]
+                one3.remove_updater(update_one)
+                two3.remove_updater(update_two)
+                three3.remove_updater(update_three)
+                four3.remove_updater(update_four)
+                self.play(FadeOut(a1), FadeOut(RQ3Group), FadeOut(dline))
+                ReFlip(axis)
+                clear_updaters(0)
+                self.play(matrix.scale, 0.7, matrix.shift, RIGHT*9+UP*i)
+                return rectangle, matrix
+
+            elif(rotate==False and refl==False and check==True):
+                obj = CheckRot(obj, angle, op, value)
+                self.play(FadeOut(obj[0]), FadeOut(obj[1]), FadeOut(obj[2]))
+                clear_updaters(angle)
+
+            elif(rotate==False and refl==True and check==True):
+                obj = CheckRefl(obj, axis, op, value)
+                self.play(FadeOut(obj[0]), FadeOut(obj[1]), FadeOut(obj[2]), FadeOut(dline))
+                ReFlip(axis)
+                clear_updaters(0)
+
+
+
+
+        ##  START  ##
+        #  Creating Title  #
+        title = TextMobject("All \\, Symmetries \\, of \\, ", "Rectangle").move_to(UP*3)
+        title[1].set_color(RED)
+        self.play(Write(title, run_time=2))
+        self.wait(3)
+
+        #  Starting with Rotational Symmetries  #
+        title2 = TextMobject("Rotational \\ \\ Symmetries").move_to(LEFT*3+UP*3)
+        shape = Polygon(ORIGIN, UP*2, UP*2+RIGHT*4, RIGHT*4,
+                        color=WHITE).scale(0.5).move_to(LEFT*4)
+        self.play(FadeOut(title, run_time=0.5), FadeInFrom(title2, LEFT),
+                    TransformFromCopy(title[1], shape, run_time=2))
+        self.wait()
+
+        #  Numbering the Base - Rectangle  #
+        NumReq(shape)
+        self.wait(3)
+
+        #  First Rotation - 0 degrees  #
+        Transform(obj=shape, op="Rotate", value="0^\\circ", angle=0, a=1, b=2, c=3, d=4, pos=[one, two, three, four], sym="rho_0", i=4)
+        self.wait(2)
+
+        #  90 degrees  #
+        Transform(obj=shape, op="Rotate", value="90^\\circ", angle=PI/2, rotate=False, refl=False, check=True)
+        self.wait(2)
+
+        #  Second Rotation - 180 degrees  #
+        Transform(obj=shape, op="Rotate", value="180^\\circ", angle=PI, a=3, b=4, c=1, d=2, pos=[three, four, one, two], sym="rho_1", i=3)
+        self.wait(2)
+
+        #  270 degrees  #
+        Transform(obj=shape, op="Rotate", value="270^\\circ", angle=3*PI/2, rotate=False, refl=False, check=True)
+        self.wait(2)
+
+        #  Starting with Reflection Symmetries  #
+        title3 = TextMobject("Reflection \\ \\ Symmetries").move_to(LEFT*3+UP*3)
+        self.play(ReplacementTransform(title2, title3), run_time=2)
+        self.wait()
+
+        #  First Reflection - Y - Axis  #
+        Transform(obj=shape, op="Flip", value="Y - Axis", axis=UP, a=4, b=3, c=2, d=1, pos=[four, three, two, one], sym="mu_1", i=2, rotate=False, refl=True)
+        self.wait(2)
+
+        #  Second Reflection -- X - Axis  #
+        Transform(obj=shape, op="Flip", value="X - Axis", axis=RIGHT, a=2, b=1, c=4, d=3, pos=[two, one, four, three], sym="mu_2", i=1, rotate=False, refl=True)
+        self.wait(2)
+
+        #  1 - 3 Diagonal  #
+        Transform(obj=shape, op="Flip", value="1-3\\, Diag", axis=np.array([-2,1,0]), a=2, b=1, c=4, d=3, pos=[two, one, four, three], sym="mu_2", i=1, rotate=False, refl=True, check=True)
+        self.wait(2)
+
+        #  2 - 4 Diagonal  #
+        Transform(obj=shape, op="Flip", value="2-4\\, Diag", axis=np.array([2,1,0]), a=2, b=1, c=4, d=3, pos=[two, one, four, three], sym="mu_2", i=1, rotate=False, refl=True, check=True)
+        self.wait(3)
+
+class Rectangle2(Scene):
+    def construct(self):
+
+        #  Fuction to Create Table  ##
+        def Table():
+            global rho_0, rho_1, mu_1, mu_2, crho_0, crho_1, cmu_1, cmu_2, lines_remove
+
+            def Letters(obj):
+                return TexMobject("\\{}".format(obj)).scale(0.7)
+
+            def VertLines(up, left, down, space, no):
+                lines = VGroup()
+                for i in range(4):
+                    lines.add(Line(up+(left - i*LEFT*space),
+                    down+(left - i*LEFT*space), stroke_width=0.7))
+                return lines
+
+            def HoriLines(up, left, right, space, no):
+                lines = VGroup()
+                for i in range(4):
+                    lines.add(Line(left+(up - i*UP*space),
+                    right+(up - i*UP*space), stroke_width=0.7))
+                return lines
+
+            letters = VGroup()
+            circ = Letters("circ").move_to(UP*3.25+LEFT*6.25).set_color(YELLOW).scale(2)
+            rho_0 = Letters("rho_0").move_to(UP*3.25+LEFT*5.55)
+            rho_1 = Letters("rho_1").move_to(UP*3.25+LEFT*4.85)
+            mu_1 = Letters("mu_1").move_to(UP*3.25+LEFT*4.15)
+            mu_2 = Letters("mu_2").move_to(UP*3.25+LEFT*3.45)
+            letters.add(circ, rho_0, rho_1, mu_1, mu_2)
+
+
+            crho_0 = Letters("rho_0").move_to(UP*2.55+LEFT*6.25)
+            crho_1 = Letters("rho_1").move_to(UP*1.85+LEFT*6.25)
+            cmu_1 = Letters("mu_1").move_to(UP*1.15+LEFT*6.25)
+            cmu_2 = Letters("mu_2").move_to(UP*0.45+LEFT*6.25)
+            letters.add(crho_0, crho_1, cmu_1, cmu_2)
+
+            vlines = VertLines(up=UP*3.6, left=LEFT*5.9, down=UP*0.1, space=0.7, no=4)
+            hlines = HoriLines(up=UP*2.9, left=LEFT*6.6, right=LEFT*3.1, space=0.7, no=4)
+            self.play(Write(vlines), Write(hlines), run_time=3)
+            self.play(Write(letters, run_time=3))
+            Table_Group.add(vlines, hlines, letters)
+            self.wait()
+
+        ##  Function to Number Rectangle  ##
+        def NumReq(rectangle, play=True, col=GREEN):
+            global one, two, three, four, rectangle_group, line1, line2, RQ1Group
+            line1 = Line(rectangle.get_corner(UL)+UP*0.15+LEFT*0.15,
+                            rectangle.get_corner(DR)+DOWN*0.15+RIGHT*0.15)
+            line2 = Line(rectangle.get_corner(DL)+DOWN*0.15+LEFT*0.15,
+                            rectangle.get_corner(UR)+UP*0.15+RIGHT*0.15)
+            one = TexMobject(r"1", color=col).scale(0.5).move_to(line1.get_start())
+            two = TexMobject(r"2", color=col).scale(0.5).move_to(line2.get_start())
+            three = TexMobject(r"3", color=col).scale(0.5).move_to(line1.get_end())
+            four = TexMobject(r"4", color=col).scale(0.5).move_to(line2.get_end())
+            rectangle_group = VGroup(rectangle, line1.set_opacity(0), line2.set_opacity(0))
+            nos = [one, two, three, four]
+
+            if play != False :
+                self.play(*[Write(num) for num in nos])
+            RQ1Group = VGroup(rectangle_group, one, two, three, four,)
+            return RQ1Group
+
+        ##  Updater Functions  ##
+        def update_one(obj):
+            obj.move_to(line1.get_start())
+        def update_two(obj):
+            obj.move_to(line2.get_start())
+        def update_three(obj):
+            obj.move_to(line1.get_end())
+        def update_four(obj):
+            obj.move_to(line2.get_end())
+
+        def RectangleRot(rectangle, angle, matrix):
+            global one2, two2, three2, four2, RQ2Group
+
+            #  Copy rectangle  #
+            rectangle2 = rectangle.copy()
+
+            #  Copy Numbers  #
+            one2 = one.copy().set_color(RED).add_updater(update_one)
+            two2 = two.copy().set_color(RED).add_updater(update_two)
+            three2 = three.copy().set_color(RED).add_updater(update_three)
+            four2 = four.copy().set_color(RED).add_updater(update_four)
+            self.add(one2, two2, three2, four2)
+
+            #  Create Required Groups  #
+            rectangle2 = VGroup(rectangle2, line1.set_opacity(0), line2.set_opacity(0))
+            RQ2Group = VGroup(rectangle2, one2, two2, three2, four2)
+
+            # Performed Required Action  #
+            self.play(RQ2Group.shift, RIGHT*4.5)
+            self.play(Rotate(rectangle2, angle), Write(matrix, run_time=2))
+            group.add(RQ2Group)
+            return rectangle2
+
+        def RectangleRefl(rectangle, axis, matrix):
+            global one3, two3, three3, four3, RQ3Group, dline
+
+            #  Copy Rectangle  #
+            rectangle3 = rectangle.copy()
+
+            #  Copy Numbers  #
+            one3 = one.copy().set_color(RED).add_updater(update_one)
+            two3 = two.copy().set_color(RED).add_updater(update_two)
+            three3 = three.copy().set_color(RED).add_updater(update_three)
+            four3 = four.copy().set_color(RED).add_updater(update_four)
+            self.add(one3, two3, three3, four3)
+
+            #  Create Required Groups  #
+            rectangle3 = VGroup(rectangle3, line1.set_opacity(0), line2.set_opacity(0))
+            RQ3Group = VGroup(rectangle3, one3, two3, three3, four3)
+
+            #  Create Line  #
+            self.play(RQ3Group.shift, RIGHT*4.5)
+            line = Line(ORIGIN, axis).scale(2.5)
+            line.move_to(line.get_center()*0 + RQ3Group.get_center())
+            dline = DashedVMobject(line)
+
+            #  Perform Required Action  #
+            self.play(ShowCreation(dline, run_time=0.5))
+            self.play(Rotate(rectangle3, angle=PI, axis=axis), Write(matrix, run_time=2))
             group.add(RQ3Group, dline)
             return rectangle3
 
@@ -2462,14 +3031,55 @@ class Rectangle(Scene):
             group.add(matrix)
             return matrix
 
-        def DrawArrow(obj, op, value):
+        def MatrixConst(a, b, c, d):
+            str = "\\begin{pmatrix1} 1 & 2 & 3 & 4 \\\\ {} & {} & {} & {}\\end{pmatrix2}".format(a, b , c, d, pmatrix1 = "{pmatrix}", pmatrix2="{pmatrix}")
+            matrix = TexMobject(str)
+            for i in range(1,5):
+                matrix[0][i].set_color(GREEN_D)
+            for j in range(5,9):
+                matrix[0][j].set_color(RED)
+            return matrix
+
+        def CreateMatrix(obj, matrix, a, b, c, d, pos1, pos2, pos3, pos4, sym):
+            self.play(Write(matrix[0][0]), Write(matrix[0][9]))
+            self.play(Write(matrix[0][1:5]))
+            pos = [pos1, pos2, pos3, pos4]
+            num = [a, b, c, d]
+            for i in range(4):
+                if (pos[i]==one) or (pos[i]==four):
+                    carrow = CurvedArrow(num[i].get_center(), pos[i].get_center(),
+                    angle=PI/3).scale(0.9)
+                elif (pos[i]==two) or (pos[i]==three):
+                    carrow = CurvedArrow(num[i].get_center(), pos[i].get_center(),
+                    angle=-PI/3).scale(0.9)
+
+                self.play(ShowCreation(carrow), Write(matrix[0][i+5]))
+                self.play(FadeOut(carrow))
+                self.remove(carrow)
+
+            symbol = TexMobject("\\{}".format(sym), "\\ \\ =").scale(0.7).next_to(matrix, LEFT)
+            self.wait()
+            self.play(Write(symbol))
+            matrix = VGroup(matrix, symbol)
+            return matrix
+
+        def DrawArrow(obj, op, col):
             global arrow_group1
             arrow = Arrow(ORIGIN, RIGHT*2).next_to(obj, RIGHT*1.5)
             operation = TexMobject("{}".format(op)).scale(0.5).next_to(arrow, UP*0.5)
-            value = TexMobject("{}^\\circ".format(value)).scale(0.5).next_to(arrow, DOWN*0.5)
-            arrow_group = VGroup(arrow, operation, value)
+            operation.set_color(col)
+            arrow_group = VGroup(arrow, operation)
             group.add(arrow_group)
             return arrow_group
+
+        def DrawArrow2(obj, op, col):
+            global arrow_group2
+            arrow = Arrow(ORIGIN, DOWN).next_to(obj, DOWN*1.5)
+            symbol = TexMobject("{}".format(op)).scale(0.5).next_to(arrow, RIGHT*0.5)
+            symbol.set_color(col)
+            arrow_group2 = VGroup(arrow, symbol)
+            group.add(arrow_group2)
+            return arrow_group2
 
         def clear_updaters(angle):
             line1.move_to(LEFT*5.5+DOWN*2).rotate(-angle)
@@ -2479,44 +3089,709 @@ class Rectangle(Scene):
             line1.rotate(angle=PI, axis=axis)
             line2.rotate(angle=PI, axis=axis)
 
-        def Transform(obj, op, value, a, b, c, d, angle=PI, axis=IN, rotate=True, refl=False):
+        def Transform(obj, mat, op, operation, col=RED, a=1, b=2, c=3, d=4, angle=PI, axis=IN, rotate=True, refl=False, opac=1):
             if(rotate==True and refl==False):
-                a1 = DrawArrow(obj, op, value)
-                self.play(ShowCreation(a1), run_time=0.5)
-                matrix = MatrixRep(a, b, c, d).next_to(obj, DOWN*2).scale(0.7)
-                rectangle = RectangleRot(obj, angle, matrix=matrix)
+                self.play(WiggleOutThenIn(operation, scale_value=2))
+                a1 = DrawArrow(obj=obj, op=op, col=col)
+                a2 = DrawArrow2(obj=mat, op=op, col=col).set_opacity(opac)
+                self.play(ShowCreation(a1), ShowCreation(a2), run_time=0.5)
+                matrix = MatrixRep(a, b, c, d).next_to(mat, DOWN*5).scale(0.7)
+                rectangle = RectangleRot(rectangle=obj, angle=angle, matrix=matrix)
                 one2.remove_updater(update_one)
                 two2.remove_updater(update_two)
                 three2.remove_updater(update_three)
                 four2.remove_updater(update_four)
                 return rectangle, matrix
 
-            if(rotate==False and refl==True):
-                a1 = DrawArrow(obj, sym, col)
-                a2 = DrawArrow2(mat, sym, col)
-                self.play(ShowCreation(a1), ShowCreation(a2))
-                matrix = MatrixRep(a, b, c, d).next_to(arrow_group2, DOWN).scale(0.7)
-                rectangle = RectangleRefl(square=obj, axis=axis, matrix=matrix)
+            elif(rotate==False and refl==True):
+                self.play(WiggleOutThenIn(operation, scale_value=2))
+                a1 = DrawArrow(obj=obj, op=op, col=col)
+                a2 = DrawArrow2(obj=mat, op=op, col=col).set_opacity(opac)
+                self.play(ShowCreation(a1), ShowCreation(a2), run_time=0.5)
+                matrix = MatrixRep(a, b, c, d).next_to(mat, DOWN*5).scale(0.7)
+                rectangle = RectangleRefl(rectangle=obj, axis=axis, matrix=matrix)
                 one3.remove_updater(update_one)
                 two3.remove_updater(update_two)
                 three3.remove_updater(update_three)
                 four3.remove_updater(update_four)
                 return rectangle, matrix
 
+        def LastScene():
+            global matrix0, matrix1, matrix2, matrix3
+            ##   Creating the Last Scene   ##
+            title = TextMobject("Reflection \\ \\ Symmetries").move_to(LEFT*3+UP*3)
+            shape = Polygon(ORIGIN, UP*2, UP*2+RIGHT*4, RIGHT*4,
+                            color=WHITE).scale(0.5).move_to(LEFT*4)
+
+            #  Numbering the Base - Rectangle  #
+            rect = NumReq(shape, play=False, col=RED)
+
+            matrix0 = MatrixConst(1, 2, 3, 4).scale(0.8)
+            matrix0 = VGroup(matrix0,TexMobject("\\rho_0\\ \\ =").scale(0.7).next_to(matrix0, LEFT)).move_to(RIGHT*4.5+UP*1.5)
+            matrix1 = MatrixConst(3, 4, 1, 2).scale(0.8)
+            matrix1 = VGroup(matrix1, TexMobject("\\rho_1\\ \\ =").scale(0.7).next_to(matrix1, LEFT)).move_to(RIGHT*4.5+UP*0.5)
+            matrix2 = MatrixConst(4, 1, 3, 2).scale(0.8)
+            matrix2 = VGroup(matrix2, TexMobject("\\mu_1\\ \\ =").scale(0.7).next_to(matrix2, LEFT)).move_to(RIGHT*4.5+DOWN*0.5)
+            matrix3 = MatrixConst(2, 1, 4, 3).scale(0.8)
+            matrix3 = VGroup(matrix3, TexMobject("\\mu_2\\ \\ =").scale(0.7).next_to(matrix3, LEFT)).move_to(RIGHT*4.5+DOWN*1.5)
+            matrices = VGroup(matrix0.scale(0.7), matrix1.scale(0.7), matrix2.scale(0.7), matrix3.scale(0.7))
+            self.add(title, rect, matrices)
+            self.wait(3)
+            self.play(FadeOut(rect), FadeOut(title), matrices.shift, UP*2+RIGHT*0.5)
+            self.wait()
+            Matrix_Group.add(matrices)
+            return matrices
 
 
-        ##  START  ##
-        title = TextMobject("All \\, Symmetries \\, of \\, ", "Rectangle").move_to(UP*3)
-        title[1].set_color(RED)
-        self.play(Write(title, run_time=2))
-        self.wait(3)
+        global Table_Group, group, Matrix_Group
+        Table_Group, group, Matrix_Group = VGroup(), VGroup(), VGroup()
+        ##  Creating  Last  Scene  ##
+        matrices = LastScene()
+        ##  Done  Creating Last Scene  ##
 
-        title2 = TextMobject("Rotational \\ \\ Symmetries").move_to(LEFT*3+UP*3)
-        shape = Polygon(ORIGIN, UP*2, UP*2+RIGHT*4, RIGHT*4, color=WHITE).scale(0.5).move_to(UP+LEFT*4)
-        self.play(FadeOut(title, run_time=0.5), FadeInFrom(title2, LEFT), TransformFromCopy(title[1], shape, run_time=2))
+
+        Table()
+        #self.play(matrices.scale, 1.1, matrices.shift, UP+RIGHT*0.5)
         self.wait()
-        NumReq(shape)
+
+
+        matrix = Dot().move_to(UP*5)
+
+        ## Permanant Square for Starting Position ##
+        rectangle = Polygon(ORIGIN, UP*2, UP*2+RIGHT*4, RIGHT*4, color=WHITE).scale(0.5).move_to(LEFT*5.5+DOWN*2)
+        self.play(ShowCreation(rectangle), ShowCreation(matrix))
+        Matrix_Group.add(NumReq(rectangle))
         self.wait(3)
-        #Transform(obj=shape, op="Rotate", value=90, a=2, b=3, c=4, d=1, angle=PI/2)
-        CheckRot(shape, PI/2, op="Rotate", value=90)
+
+        ##  Fill the First rows and Coloums  ##
+        char0 = rho_0.copy().set_color(RED).shift(DOWN*0.7)
+        char1 = rho_1.copy().set_color(YELLOW).shift(DOWN*0.7)
+        char2 = mu_1.copy().set_color(GREEN_E).shift(DOWN*0.7)
+        char3 = mu_2.copy().set_color(BLUE_E).shift(DOWN*0.7)
+        char4 = crho_1.copy().set_color(YELLOW).shift(RIGHT*0.7)
+        char5 = cmu_1.copy().set_color(GREEN_E).shift(RIGHT*0.7)
+        char6 = cmu_2.copy().set_color(BLUE_E).shift(RIGHT*0.7)
+        chars = VGroup(char0, char1, char2, char3, char4, char5, char6)
+        Table_Group.add(char0, char1, char2, char3, char4, char5, char6)
+        self.play(Write(chars, run_time=3))
+        self.wait(2)
+
+        ## Transform r1(r1(x)) ##
+        T1 = obj=Transform(obj=rectangle, mat=matrix, op="\\rho_1", col=YELLOW, angle=PI, operation=crho_1, a=3, b=4, c=1, d=2, opac=0)
+        T2 = Transform(obj=T1[0], mat=T1[1], op="\\rho_1", col=YELLOW, angle=PI, operation=rho_1, a=1, b=2, c=3, d=4)
+        self.play(WiggleOutThenIn(matrix0, scale_value=2))
+        char = rho_0.copy().shift(DOWN*1.4 + RIGHT*0.7).set_color(RED)
+        self.play(Write(char), FadeOut(group))
+        clear_updaters(0)
+        group = VGroup()
+        Table_Group.add(char)
+        self.wait()
+
+        ## Transform mu_1(r1(x)) ##
+        T1 = obj=Transform(obj=rectangle, mat=matrix, op="\\rho_1", col=YELLOW, angle=PI, operation=crho_1, a=3, b=4, c=1, d=2, opac=0)
+        T2 = Transform(obj=T1[0], mat=T1[1], op="\\mu_1", col=GREEN_E, axis=UP, operation=mu_1, a=2, b=1, c=4, d=3, rotate=False, refl=True)
+        self.play(WiggleOutThenIn(matrix3, scale_value=2))
+        char = mu_2.copy().shift(DOWN*1.4 + LEFT*0.7).set_color(BLUE_E)
+        self.play(Write(char), FadeOut(group))
+        ReFlip(axis=UP)
+        clear_updaters(angle=PI)
+        Table_Group.add(char)
+        group = VGroup()
+        self.wait()
+
+        ## Transform r1(mu1(x)) ##
+        T1 = obj=Transform(obj=rectangle, mat=matrix, op="\\mu_1", col=GREEN_E, axis=UP, operation=cmu_1, a=4, b=3, c=2, d=1, opac=0, rotate=False, refl=True)
+        T2 = Transform(obj=T1[0], mat=T1[1], op="\\rho_1", col=YELLOW, angle=PI, operation=rho_1, a=2, b=1, c=4, d=3)
+        self.play(WiggleOutThenIn(matrix3, scale_value=2))
+        char = cmu_2.copy().shift(UP*0.7 + RIGHT*1.4).set_color(BLUE_E)
+        self.play(Write(char), FadeOut(group))
+        clear_updaters(angle=PI)
+        ReFlip(axis=UP)
+        Table_Group.add(char)
+        group = VGroup()
+        self.wait()
+
+        ## Transform mu_2(r1(x)) ##
+        T1 = obj=Transform(obj=rectangle, mat=matrix, op="\\rho_1", col=YELLOW, angle=PI, operation=crho_1, a=3, b=4, c=1, d=2, opac=0)
+        T2 = Transform(obj=T1[0], mat=T1[1], op="\\mu_2", col=BLUE_E, axis=RIGHT, operation=mu_2, a=4, b=3, c=2, d=1, rotate=False, refl=True)
+        self.play(WiggleOutThenIn(matrix2, scale_value=2))
+        char = mu_1.copy().shift(DOWN*1.4 + RIGHT*0.7).set_color(GREEN_E)
+        self.play(Write(char), FadeOut(group))
+        ReFlip(axis=RIGHT)
+        clear_updaters(angle=PI)
+        Table_Group.add(char)
+        group = VGroup()
+        self.wait()
+
+        ## Transform r1(mu2(x)) ##
+        T1 = obj=Transform(obj=rectangle, mat=matrix, op="\\mu_2", col=BLUE_E, axis=RIGHT, operation=cmu_2, a=2, b=1, c=4, d=3, opac=0, rotate=False, refl=True)
+        T2 = Transform(obj=T1[0], mat=T1[1], op="\\rho_1", col=YELLOW, angle=PI, operation=rho_1, a=4, b=3, c=2, d=1)
+        self.play(WiggleOutThenIn(matrix2, scale_value=2))
+        char = cmu_1.copy().shift(DOWN*0.7 + RIGHT*1.4).set_color(GREEN_E)
+        self.play(Write(char), FadeOut(group))
+        clear_updaters(angle=PI)
+        ReFlip(axis=RIGHT)
+        Table_Group.add(char)
+        group = VGroup()
+        self.wait()
+
+        ## Transform mu_2(mu1(x)) ##
+        T1 = obj=Transform(obj=rectangle, mat=matrix, op="\\mu_1", col=GREEN_E, axis=UP, operation=cmu_1, a=4, b=3, c=2, d=1, opac=0, rotate=False, refl=True)
+        T2 = Transform(obj=T1[0], mat=T1[1], op="\\mu_2", col=BLUE_E, axis=RIGHT, operation=mu_2, a=3, b=4, c=1, d=2, rotate=False, refl=True)
+        self.play(WiggleOutThenIn(matrix1, scale_value=2))
+        char = rho_1.copy().shift(DOWN*2.1 + RIGHT*1.4).set_color(YELLOW)
+        self.play(Write(char), FadeOut(group))
+        ReFlip(axis=RIGHT)
+        ReFlip(axis=UP)
+        clear_updaters(angle=0)
+        group = VGroup()
+        Table_Group.add(char)
+        self.wait()
+
+        ## Transform mu1(mu2(x)) ##
+        T1 = obj=Transform(obj=rectangle, mat=matrix, op="\\mu_2", col=BLUE_E, axis=RIGHT, operation=cmu_2, a=2, b=1, c=4, d=3, opac=0, rotate=False, refl=True)
+        T2 = Transform(obj=T1[0], mat=T1[1], op="\\mu_1", col=GREEN_E, axis=UP, operation=mu_1, a=3, b=4, c=1, d=2, rotate=False, refl=True)
+        self.play(WiggleOutThenIn(matrix1, scale_value=2))
+        char = crho_1.copy().shift(DOWN*1.4 + RIGHT*2.1).set_color(YELLOW)
+        self.play(Write(char), FadeOut(group))
+        ReFlip(axis=UP)
+        ReFlip(axis=RIGHT)
+        clear_updaters(angle=PI)
+        group = VGroup()
+        Table_Group.add(char)
+        self.wait()
+
+        ##  Fill the First rows and Coloums  ##
+        char0 = rho_0.copy().set_color(RED).shift(DOWN*2.1 + RIGHT*1.4)
+        char1 = rho_0.copy().set_color(RED).shift(DOWN*2.8 + RIGHT*2.1)
+        chars = VGroup(char0, char1)
+        self.play(Write(chars, run_time=2))
+        Table_Group.add(char0, char1)
+        self.wait(3)
+
+        self.play(FadeOut(Matrix_Group), Table_Group.next_to, Table_Group.get_center()*0+LEFT*2)
+        self.wait(3)
+
+class RectProperties(Scene):
+    def construct(self):
+
+        #  Fuction to Create Table  ##
+        def Table():
+            global rho_0, rho_1, mu_1, mu_2, crho_0, crho_1, cmu_1, cmu_2, lines_remove
+
+            def Letters(obj):
+                return TexMobject("\\{}".format(obj)).scale(0.7)
+
+            def VertLines(up, left, down, space, no):
+                lines = VGroup()
+                for i in range(4):
+                    lines.add(Line(up+(left - i*LEFT*space),
+                    down+(left - i*LEFT*space), stroke_width=0.7))
+                return lines
+
+            def HoriLines(up, left, right, space, no):
+                lines = VGroup()
+                for i in range(4):
+                    lines.add(Line(left+(up - i*UP*space),
+                    right+(up - i*UP*space), stroke_width=0.7))
+                return lines
+
+            letters = VGroup()
+            circ = Letters("circ").move_to(UP*3.25+LEFT*6.25).set_color(YELLOW).scale(2)
+            rho_0 = Letters("rho_0").move_to(UP*3.25+LEFT*5.55)
+            rho_1 = Letters("rho_1").move_to(UP*3.25+LEFT*4.85)
+            mu_1 = Letters("mu_1").move_to(UP*3.25+LEFT*4.15)
+            mu_2 = Letters("mu_2").move_to(UP*3.25+LEFT*3.45)
+            letters.add(circ, rho_0, rho_1, mu_1, mu_2)
+
+
+            crho_0 = Letters("rho_0").move_to(UP*2.55+LEFT*6.25)
+            crho_1 = Letters("rho_1").move_to(UP*1.85+LEFT*6.25)
+            cmu_1 = Letters("mu_1").move_to(UP*1.15+LEFT*6.25)
+            cmu_2 = Letters("mu_2").move_to(UP*0.45+LEFT*6.25)
+            letters.add(crho_0, crho_1, cmu_1, cmu_2)
+
+            vlines = VertLines(up=UP*3.6, left=LEFT*5.9, down=UP*0.1, space=0.7, no=4)
+            hlines = HoriLines(up=UP*2.9, left=LEFT*6.6, right=LEFT*3.1, space=0.7, no=4)
+            #self.play(Write(vlines), Write(hlines), run_time=3)
+            #self.play(Write(letters, run_time=3))
+            Table_Group.add(vlines, hlines, letters)
+            self.wait()
+
+        ##  Function to fill the Table with Characters  ##
+        def Characters():
+            global Chars, hchars, vchars, identity
+            char0 = rho_0.copy().set_color(RED).shift(DOWN*0.7)
+            char1 = rho_1.copy().set_color(YELLOW).shift(DOWN*0.7)
+            char2 = mu_1.copy().set_color(GREEN_E).shift(DOWN*0.7)
+            char3 = mu_2.copy().set_color(BLUE_E).shift(DOWN*0.7)
+            char4 = crho_1.copy().set_color(YELLOW).shift(RIGHT*0.7)
+            char5 = cmu_1.copy().set_color(GREEN_E).shift(RIGHT*0.7)
+            char6 = cmu_2.copy().set_color(BLUE_E).shift(RIGHT*0.7)
+            char7 = rho_0.copy().shift(DOWN*1.4 + RIGHT*0.7).set_color(RED)
+            char8 = mu_2.copy().shift(DOWN*1.4 + LEFT*0.7).set_color(BLUE_E)
+            char9 = cmu_2.copy().shift(UP*0.7 + RIGHT*1.4).set_color(BLUE_E)
+            char10 = mu_1.copy().shift(DOWN*1.4 + RIGHT*0.7).set_color(GREEN_E)
+            char11 = cmu_1.copy().shift(DOWN*0.7 + RIGHT*1.4).set_color(GREEN_E)
+            char12 = rho_1.copy().shift(DOWN*2.1 + RIGHT*1.4).set_color(YELLOW)
+            char13 = crho_1.copy().shift(DOWN*1.4 + RIGHT*2.1).set_color(YELLOW)
+            char14 = rho_0.copy().set_color(RED).shift(DOWN*2.1 + RIGHT*1.4)
+            char15 = rho_0.copy().set_color(RED).shift(DOWN*2.8 + RIGHT*2.1)
+
+            Table_Group.add(char0,char1,char2,char3,char4,char5,char6,char7,char8,char9,char10,char11,char12,char13,char14,char15)
+
+            Chars = VGroup(char0,char1,char2,char3,char4,char5,char6,char7,char8,char9,char10,char11,char12,char13,char14,char15)
+
+            hchars = VGroup(char0, char1, char2, char3)
+            vchars = VGroup(char0, char4, char5, char6)
+            identity = VGroup(char0, char7, char14, char15)
+
+        def CreateProperties():
+            global prop, prop1, prop1_1, prop2, prop2_1, prop3, prop3_1, prop4, prop4_1, prop5, prop5_1, Property_Group, Properties
+            ## 1st Property - CLOSED ##
+            Property_Group, Properties = VGroup(), VGroup()
+            prop = TextMobject("Properties :- ", color=GOLD).scale(1.5).move_to(LEFT*4+UP*2.5)
+            # Coloring The Required Characteres #
+            prop1 = TexMobject(
+                                "1. \\ \\ \\ \\",                   #0
+                                "\\text{If    }\\ \\",              #1
+                                "f_1",                              #2
+                                ",",                                #3
+                                "f_2\\,",                           #4
+                                "\\in\\,",                          #5
+                                "G",                                #6
+                                "\\ \\ \\text{,  then    } \\ \\",  #7
+                                "f_1",                              #8
+                                "\\circ",                           #9
+                                "f_2\\,",                           #10
+                                "\\in",                             #11
+                                "G"                                 #12
+            ).scale(0.7)
+            prop1[2].set_color(BLUE_D)
+            prop1[4].set_color(RED)
+            prop1[5].set_color(YELLOW)
+            prop1[6].set_color(GREEN_E)
+            prop1[8].set_color(BLUE_D)
+            prop1[9].set_color(YELLOW)
+            prop1[10].set_color(RED)
+            prop1[11].set_color(YELLOW)
+            prop1[12].set_color(GREEN)
+            prop1.move_to(LEFT*3.5+UP*1.5)
+            # Writing Property 1 in Words #
+            prop1_1 = TexMobject(
+                                    "(\\, \\text{ i.e }",   #0
+                                    "G",                    #1
+                                    "\\text{ is}\\ \\ ",    #2
+                                    "Closed",               #3
+                                    "\\ \\ \\text{under }", #4
+                                    "\\circ",               #5
+                                    "\\text{ operation.}",  #6
+                                    "\\,)"                  #7
+            ).scale(0.7)
+            prop1_1.next_to(prop1, RIGHT*2)
+            prop1_1[1].set_color(GREEN_D)
+            prop1_1[3].set_color(RED)
+            prop1_1[5].set_color(YELLOW)
+            # Add both to the Group Properties
+            Properties.add(prop, prop1.set_opacity(0), prop1_1.set_opacity(0))
+
+            ## 2nd Property ##
+            prop2 = TexMobject(
+                                "2. \\ \\ \\ \\",           #0
+                                "\\ \\ \\forall\\,",        #1
+                                "f \\,",                    #2
+                                "\\in\\,",                  #3
+                                "G",                        #4
+                                ",\\ \\",                   #5
+                                "f",                        #6
+                                "\\circ",                   #7
+                                "\\rho_0",                  #8
+                                "\\ \\ = \\ \\,",           #9
+                                "\\rho_0",                  #10
+                                "\\circ",                   #11
+                                "f",                        #12
+                                "\\ \\ = \\ \\,",           #13
+                                "f"                         #14
+            ).scale(0.7)
+            prop2[1].set_color(YELLOW)
+            prop2[2].set_color(BLUE_D)
+            prop2[3].set_color(YELLOW)
+            prop2[4].set_color(GREEN_D)
+            prop2[6].set_color(BLUE_D)
+            prop2[7].set_color(YELLOW)
+            prop2[8].set_color(RED)
+            prop2[10].set_color(RED)
+            prop2[11].set_color(YELLOW)
+            prop2[12].set_color(BLUE_D)
+            prop2[14].set_color(BLUE_D)
+            #   Property 2 in words #
+            prop2_1 = TexMobject(
+                                    "(\\,\\text{ i.e }",            #0
+                                    "\\text{ Existence of }",       #1
+                                    "Identity",                     #2
+                                    "\\text{ element}",             #3
+                                    "\\,)"                          #4
+            ).scale(0.7)
+            #   Set Color#
+            prop2_1[2].set_color(RED)
+            #  Move to Required Position    #
+            prop2[0].next_to(prop1[0], DOWN*2)
+            prop2[1:].next_to(prop2[0])
+            prop2_1.next_to(prop2, RIGHT*2)
+            # Add both to the Group Properties
+            Properties.add(prop2.set_opacity(0), prop2_1.set_opacity(0))
+
+            ##  3rd Property   ##
+            prop3 = TexMobject(
+                                "3. \\ \\ \\ \\",   #0
+                                "\\forall\\,",      #1
+                                "f\\,",             #2
+                                "\\in\\,",          #3
+                                "G",                #4
+                                ",\\ \\",           #5
+                                "\\exists\\,",      #6
+                                "f^{-1}\\,",        #7
+                                "\\in\\,",          #8
+                                "G",                #9
+                                "\\ \\ \\text{ such that }",    #10
+                                "f",                #11
+                                "\\circ",           #12
+                                "f^{-1}",           #13
+                                "\\ \\ = \\ \\",    #14
+                                "f^{-1}",           #15
+                                "\\circ",           #16
+                                "f",                #17
+                                "\\ \\ = \\ \\",    #18
+                                "\\rho_0"           #19
+                                ).scale(0.7)
+            prop3[1].set_color(YELLOW)
+            prop3[2].set_color(BLUE_D)
+            prop3[3].set_color(YELLOW)
+            prop3[4].set_color(GREEN_D)
+            prop3[6].set_color(YELLOW)#exists
+            prop3[7].set_color("#d65435")
+            prop3[8].set_color(YELLOW)
+            prop3[9].set_color(GREEN_D)
+            prop3[11].set_color(BLUE_D)
+            prop3[12].set_color(GOLD)
+            prop3[13].set_color("#d65435")
+            prop3[15].set_color("#d65435")
+            prop3[16].set_color(GOLD)
+            prop3[17].set_color(BLUE_D)
+            prop3[19].set_color(RED)
+            prop3[0].next_to(prop2[0], DOWN*2)
+            prop3[1:].next_to(prop3[0])
+            #   Property 3 in WOrds #
+            prop3_1 = TexMobject(
+                                    "(\\,",                         #0
+                                    "\\text{i.e}\\ \\",             #1
+                                    "\\text{Existence  of} \\ \\",  #2
+                                    "Inverse",                      #3
+                                    "\\ \\ )"                       #4
+            ).scale(0.7)
+            prop3_1[3].set_color(RED)
+            prop3_1.next_to(prop3, DOWN*0.7)
+            Properties.add(prop3.set_opacity(0), prop3_1.set_opacity(0))
+
+            ##  4th Property  ##
+            prop4 = TexMobject(
+                                "4.\\ \\ \\ \\ ",               #0
+                                "\\text{If}\\ \\",          #1
+                                "f_1",                      #2
+                                ",\\,",                     #3
+                                "f_2",                      #4
+                                ",\\,",                     #5
+                                "f_3",                      #6
+                                "\\,\\in\\,",               #7
+                                "G",                        #8
+                                "\\ \\ \\ \\ \\text{then}", #9
+                                "\\ \\ \\ \\ (",            #10
+                                "f_1",                      #11
+                                "\\circ",                   #12
+                                "f_2",                      #13
+                                ")",                        #14
+                                "\\circ",                   #15
+                                "f_3",                      #16
+                                "\\ \\ = \\ \\",            #17
+                                "f_1",                      #18
+                                "\\circ",                   #19
+                                "(",                        #20
+                                "f_2",                      #21
+                                "\\circ",                   #22
+                                "f_3",                      #23
+                                ")"                         #24
+            ).scale(0.7)
+            prop4[2].set_color(RED)
+            prop4[4].set_color(GREEN_E)
+            prop4[6].set_color(BLUE_D)
+            prop4[7].set_color(YELLOW)
+            prop4[8].set_color(GREEN_D)
+            prop4[11].set_color(RED)
+            prop4[12].set_color(GOLD)
+            prop4[13].set_color(GREEN_E)
+            prop4[15].set_color(GOLD)
+            prop4[16].set_color(BLUE_D)
+            prop4[18].set_color(RED)
+            prop4[19].set_color(GOLD)
+            prop4[21].set_color(GREEN_E)
+            prop4[22].set_color(GOLD)
+            prop4[23].set_color(BLUE_D)
+            prop4[0].next_to(prop3[0], DOWN*4)
+            prop4[1:].next_to(prop4[0])
+            #   Propert4 in Words   #
+            prop4_1 = TexMobject(
+                                    "(\\, \\text{i.e  }",
+                                    "Associativity",
+                                    "\\,)"
+            ).scale(0.7)
+            prop4_1[1].set_color(RED)
+            prop4_1.next_to(prop4, RIGHT*2)
+            Properties.add(prop4.set_opacity(0), prop4_1.set_opacity(0))
+
+            ## 5th Propperty  ##
+            prop5 = TexMobject(
+                                "5.\\ \\",              #0
+                                "\\forall\\,",          #1
+                                "f_1\\,",               #2
+                                ",",                    #3
+                                "f_2\\,",               #4
+                                "\\in\\,",              #5
+                                "G",                    #6
+                                ",\\ \\ \\ \\ \\ \\ \\",#7
+                                "f_1",                  #8
+                                "\\circ",               #9
+                                "f_2",                  #10
+                                "\\ \\ = \\ \\ ",       #11
+                                "f_2",                  #12
+                                "\\circ",               #13
+                                "f_1"                   #14
+            ).scale(0.7)
+            prop5[1].set_color(YELLOW)
+            prop5[2].set_color(BLUE_D)
+            prop5[4].set_color(RED)
+            prop5[5].set_color(YELLOW)
+            prop5[6].set_color(GREEN_D)
+            prop5[8].set_color(BLUE_D)
+            prop5[9].set_color(YELLOW)
+            prop5[10].set_color(RED)
+            prop5[12].set_color(RED)
+            prop5[13].set_color(YELLOW)
+            prop5[14].set_color(BLUE_D)
+            # Property 5 in Words #
+            prop5_1 = TexMobject(
+                                    "(\\, i.e\\ \\",    #0
+                                    "G",                #1
+                                    "\\text{ is }",     #2
+                                    "Abelian",          #3
+                                    ")"                 #4
+            ).scale(0.7)
+            prop5_1[1].set_color(GREEN_D)
+            prop5_1[3].set_color(RED)
+            #   Move to required position   #
+            prop5[0].next_to(prop4[0], DOWN*2)
+            prop5[1:].next_to(prop5[0])
+            prop5_1.next_to(prop5, RIGHT*2)
+            #Properties.add(prop5.set_opacity(0), prop5_1.set_opacity(0))
+
+        def Property1():
+            self.play(WiggleOutThenIn(Chars, scale_value=2, run_time=3))
+            self.play(FadeOutAndShiftDown(Table_Group))
+            self.play(Write(prop.set_opacity(1)))
+            self.wait()
+            self.play(Write(prop1[:7].set_opacity(1), run_time=2))
+            self.wait()
+            self.play(Write(prop1[7:].set_opacity(1), run_time=2))
+            self.wait()
+            self.play(Write(prop1_1.set_opacity(1), run_time=2))
+            self.wait(3)
+            self.play(FadeOutAndShift(Properties, UP),  FadeInFromDown(Table_Group, run_time=2))
+            self.wait(2)
+
+        def Property2():
+            self.play(WiggleOutThenIn(crho_0, scale_value=2))
+            self.play(WiggleOutThenIn(hletters, run_time=2))
+            self.play(Indicate(hchars, scale_factor=1.5), run_time=2)
+            self.wait()
+            self.play(WiggleOutThenIn(vletters, run_time=2))
+            self.play(WiggleOutThenIn(rho_0, scale_value=2))
+            self.play(Indicate(vchars, scale_factor=1.5), run_time=2)
+            self.wait()
+            self.play(FadeOutAndShiftDown(Table_Group), FadeInFrom(Properties, UP, run_time=2))
+            self.wait()
+            self.play(Write(prop2[:6].set_opacity(1), run_time=2))
+            self.wait()
+            self.play(Write(prop2[6:9].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop2[9:13].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop2[13:].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop2_1.set_opacity(1)))
+            self.wait(3)
+            self.play(FadeOutAndShift(Properties, UP),  FadeInFromDown(Table_Group, DOWN, run_time=2))
+
+        def Property3():
+            self.play(WiggleOutThenIn(identity, rum_time=2))
+            self.play(WiggleOutThenIn(crho_1, scale_value=2, rum_time=2), WiggleOutThenIn(rho_3, scale_value=2, rum_time=2))
+            self.wait()
+            self.play(Indicate(char15, scale_factor=2, run_time=2))
+            self.wait()
+            self.play(WiggleOutThenIn(rho_1, scale_value=2, rum_time=2), WiggleOutThenIn(crho_3, scale_value=2, rum_time=2))
+            self.wait()
+            self.play(Indicate(char20, scale_factor=2, run_time=2))
+            self.wait()
+            self.play(WiggleOutThenIn(identity, rum_time=2))
+            self.wait()
+            self.play(FadeOutAndShiftDown(Table_Group), FadeInFrom(Properties, UP, run_tim=2))
+            self.wait()
+            self.play(Write(prop3[:5].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop3[5:10].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop3[10:14].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop3[14:18].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop3[18:].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop3_1.set_opacity(1)))
+            self.wait()
+            self.play(FadeOutAndShift(Properties, UP), FadeInFrom(Table_Group, DOWN,run_time=2))
+            self.wait()
+
+        def Property4():
+            # Setting up the Pitch
+            comp1 = TexMobject(
+                                "(\\,",             #0
+                                "\\mu_1",           #1
+                                "\\circ",           #2
+                                "\\rho_3",          #3
+                                "\\,)",             #4
+                                "\\circ",           #5
+                                "\\mu_2",           #6
+                                "\\ \\ = \\ \\",    #7
+                                "\\rho_3"           #8
+            ).scale(0.7)
+            comp1[1].set_color(GREEN_E)
+            comp1[2].set_color(GOLD)
+            comp1[3].set_color(GREEN_D)
+            comp1[5].set_color(GOLD)
+            comp1[6].set_color(BLUE)
+            comp1[8].set_color(GREEN_D)
+
+            comp2 = TexMobject(
+                                "\\mu_1",           #0
+                                "\\circ",           #1
+                                "(\\,",             #2
+                                "\\rho_3",          #3
+                                "\\circ",           #4
+                                "\\mu_2",           #5
+                                "\\,)",             #6
+                                "\\ \\ = \\ \\",    #7
+                                "\\rho_3"           #8
+            ).scale(0.7)
+            comp2[0].set_color(GREEN_E)
+            comp2[1].set_color(GOLD)
+            comp2[3].set_color(GREEN_D)
+            comp2[4].set_color(GOLD)
+            comp2[5].set_color(BLUE)
+            comp2[8].set_color(GREEN_D)
+
+            comp1.move_to(UP*2.5+LEFT*5.3)
+            comp2.move_to(UP + LEFT*5.3)
+
+            self.play(WiggleOutThenIn(cmu_1, scale_value=2, run_time=2), WiggleOutThenIn(rho_3, scale_value=2, run_time=2), Write(comp1[:5],run_time=2))
+            self.play(Indicate(char28, scale_factor=2, run_time=3))
+            self.play(WiggleOutThenIn(cdelta_2, scale_value=2, run_time=2), WiggleOutThenIn(mu_2, scale_value=2, run_time=2), Write(comp1[5:7],run_time=2))
+            self.play(Indicate(char59, scale_factor=2, run_time=3), Write(comp1[7:], run_time=2))
+            self.wait(2)
+
+            self.play(WiggleOutThenIn(crho_3, scale_value=2, run_time=2), WiggleOutThenIn(mu_2, scale_value=2, run_time=2), Write(comp2[2:7],run_time=2))
+            self.play(Indicate(char45, scale_factor=2, run_time=3))
+            self.play(WiggleOutThenIn(cmu_1, scale_value=2, run_time=2), WiggleOutThenIn(delta_2, scale_value=2, run_time=2), Write(comp2[:2],run_time=2))
+            self.play(Indicate(char61, scale_factor=2, run_time=3), Write(comp2[7:], run_time=2))
+            self.wait(2)
+
+            self.play(FadeOutAndShiftDown(Table_Group), FadeOut(comp1), FadeOut(comp2), FadeInFrom(Properties, UP, run_time=2))
+            self.play(Write(prop4[:9].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop4[9:17].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop4[17:].set_opacity(1)))
+            self.wait()
+            self.play(Write(prop4_1.set_opacity(1)))
+            self.wait(2)
+            self.play(FadeOutAndShift(Properties, UP), FadeInFrom(Table_Group, run_time=2))
+            self.wait(2)
+
+        def Property5():
+            self.play(FadeOutAndShift(Properties, UP), FadeInFrom(Table_Group, run_time=2))
+            self.wait(3)
+            self.play(FadeOutAndShiftDown(Table_Group), FadeInFrom(Properties, UP, run_time=2))
+            self.wait()
+            self.play(Write(prop5[:7].set_opacity(1), run_time=2))
+            self.wait()
+            self.play(Write(prop5[7:11].set_opacity(1), run_time=2))
+            self.wait()
+            self.play(Write(prop5[11:].set_opacity(1), run_time=2))
+            self.wait()
+            self.play(Write(prop5_1.set_opacity(1)))
+
+
+
+
+        global Table_Group, Fade
+        Table_Group, Fade = VGroup(), VGroup()
+
+        ## Creating and Labeling Table ##
+        Table()
+        ## Filling in the table ##
+        Characters()
+        #"""
+        Table_Group.next_to(Table_Group.get_center()*0+LEFT*2)
+        self.add(Table_Group)
+        self.wait(3)
+        CreateProperties()
+        self.play(FadeOutAndShiftDown(Table_Group), FadeInFrom(Properties.set_opacity(1), UP, run_time=3))
+        self.wait(3)
+        Property5()
+        self.wait(3)
+        Fade.add(prop, prop1, prop1_1[0], prop1_1[7])
+        Fade.add(prop2, prop2_1[0], prop2_1[4])
+        Fade.add(prop3, prop3_1[0:2], prop3_1[4])
+        Fade.add(prop4, prop4_1[0], prop4_1[2])
+        Fade.add(prop5, prop5_1[0], prop5_1[4])
+
+        ##  FADE AND ALIGN WORDS  ##
+        num1 = TexMobject("1.\\ \\ \\ \\").scale(0.7).move_to(UP*2.5+LEFT*5)
+        num2 = TexMobject("2.\\ \\ \\ \\").scale(0.7).move_to(UP*1.5+LEFT*5)
+        num3 = TexMobject("3.\\ \\ \\ \\").scale(0.7).move_to(UP*0.5+LEFT*5)
+        num4 = TexMobject("4.\\ \\ \\ \\").scale(0.7).move_to(DOWN*0.5+LEFT*5)
+        num5 = TexMobject("5.\\ \\ \\ \\").scale(0.7).move_to(DOWN*2+LEFT*5)
+        num = VGroup(num1, num2, num3, num4, num5)
+        self.play(FadeOut(Fade))
+        self.remove(Fade)
+        Fade.set_opacity(0)
+        self.play(Write(num),
+        prop1_1[1:7].move_to, prop1_1[1:7].next_to(num1),
+        prop2_1[1:4].move_to, prop2_1[1:4].next_to(num2),
+        prop3_1[2:4].move_to, prop3_1[2:4].next_to(num3),
+        prop4_1[1].move_to,   prop4_1[1].next_to(num4),
+        prop5_1[1:4].move_to, prop5_1[1:4].next_to(num5))#, run_time=3)
+        self.wait(3)
+        group1 = VGroup(num1, num2, num3, num4, prop1_1, prop2_1, prop3_1, prop4_1)
+        group2 = VGroup(num1, num2, num3, num4, num5, prop1_1, prop2_1, prop3_1, prop4_1, prop5_1)
+        self.play(group2.shift, RIGHT*5)
+        braces1 = Brace(group1, LEFT)
+        braces2 = Brace(group2, LEFT)
+        text1 = braces1.get_text("GROUP")
+        text2 = braces2.get_text("Abelian Group")
+        text1.set_color(GOLD)
+        text2.set_color(GOLD)
+
+        self.play(ShowCreation(braces1))
+        self.play(Write(text1), run_time=2)
+        self.wait(2)
+        self.play(ReplacementTransform(braces1, braces2),
+                    ReplacementTransform(text1, text2, run_time=2))
         self.wait(3)
